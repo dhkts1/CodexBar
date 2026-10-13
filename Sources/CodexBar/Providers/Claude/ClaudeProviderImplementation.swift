@@ -30,6 +30,7 @@ struct ClaudeProviderImplementation: ProviderImplementation {
         _ = settings.claudeSwapEnabled
         _ = settings.claudeSwapShowSingleAccount
         _ = settings.claudeSwapExecutablePath
+        _ = settings.claudeSwapSource
     }
 
     @MainActor
@@ -187,7 +188,7 @@ struct ClaudeProviderImplementation: ProviderImplementation {
         }
         var parts: [String] = []
         if let version = store.claudeSwapDetectedVersion {
-            parts.append("claude-swap \(version)")
+            parts.append("\(settings.claudeSwapSource.label) \(version)")
         }
         if let error = store.claudeSwapLastError {
             parts.append(error)
@@ -250,6 +251,17 @@ struct ClaudeProviderImplementation: ProviderImplementation {
                 options: keychainPromptPolicyOptions,
                 isVisible: nil,
                 isEnabled: { !context.settings.debugDisableKeychainAccess },
+                onChange: nil),
+            ProviderSettingsPickerDescriptor(
+                id: "claude-swap-source",
+                title: "Source",
+                subtitle: "",
+                binding: context.rawValueBinding(\.claudeSwapSource, fallback: .claudeSwap),
+                // Tool names, not prose: they stay untranslated in every locale.
+                options: ClaudeSwapAccountSource.allCases.map {
+                    ProviderSettingsPickerOption(id: $0.rawValue, title: $0.label)
+                },
+                isVisible: { context.settings.claudeSwapEnabled },
                 onChange: nil),
             ProviderCookieSourceUI.picker(
                 id: "claude-cookie-source",

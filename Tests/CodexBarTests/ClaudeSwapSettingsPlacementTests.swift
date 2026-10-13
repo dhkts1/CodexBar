@@ -33,6 +33,30 @@ struct ClaudeSwapSettingsPlacementTests {
     }
 
     @Test
+    func `source picker appears with the integration and switches to tcr`() throws {
+        let fixture = try ProviderSettingsDescriptorTests()
+            .makeSettingsFixture(suite: "ProviderSettingsDescriptorTests-claude-swap-source")
+        let context = fixture.settingsContext(provider: .claude)
+        let implementation = ClaudeProviderImplementation()
+        let picker = try #require(implementation.settingsPickers(context: context).first {
+            $0.id == "claude-swap-source"
+        })
+        #expect(picker.options.map(\.id) == ["claude-swap", "tcr"])
+        #expect(picker.isVisible?() == false)
+        #expect(picker.binding.wrappedValue == "claude-swap")
+
+        fixture.settings.claudeSwapEnabled = true
+        #expect(picker.isVisible?() == true)
+        picker.binding.wrappedValue = "tcr"
+        #expect(fixture.settings.claudeSwapSource == .tcr)
+        #expect(fixture.settings.configSnapshot.providerConfig(for: .claude)?.claudeSwapSource == "tcr")
+
+        // Choosing claude-swap again removes the key rather than writing the default.
+        picker.binding.wrappedValue = "claude-swap"
+        #expect(fixture.settings.configSnapshot.providerConfig(for: .claude)?.claudeSwapSource == nil)
+    }
+
+    @Test
     func `render synthetic claude swap settings proof`() throws {
         guard let directory = ProcessInfo.processInfo.environment["CODEXBAR_CLAUDE_PRESENTATION_PROOF_DIR"] else {
             return

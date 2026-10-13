@@ -92,12 +92,16 @@ extension UsageStore {
 
     func refreshClaudeSwapAccounts(generation: UInt64? = nil) async {
         let executablePath = self.settings.claudeSwapExecutablePath
-        await self.probeClaudeSwapVersionIfNeeded(executablePath: executablePath)
+        let source = self.settings.claudeSwapSource
+        await self.probeClaudeSwapVersionIfNeeded(executablePath: executablePath, source: source)
 
         do {
-            let list = try await ClaudeSwapAccountReader.readAccountList(executablePath: executablePath)
+            let list = try await ClaudeSwapAccountReader.readAccountList(
+                executablePath: executablePath,
+                source: source)
             let snapshots = ClaudeSwapAccountProjection.accountSnapshots(
                 from: list,
+                source: source,
                 previousAccounts: ClaudeSwapRetainedUsageStore.previousAccounts(
                     inMemory: self.claudeSwapAccountSnapshots))
             guard self.isCurrentClaudeSwapRefresh(executablePath: executablePath, generation: generation) else {
@@ -213,11 +217,11 @@ extension UsageStore {
         progressDidChange?()
     }
 
-    private func probeClaudeSwapVersionIfNeeded(executablePath: String) async {
+    private func probeClaudeSwapVersionIfNeeded(executablePath: String, source: ClaudeSwapAccountSource) async {
         guard self.claudeSwapTransientState.versionProbedPath != executablePath else { return }
         self.claudeSwapTransientState.versionProbeGeneration &+= 1
         let generation = self.claudeSwapTransientState.versionProbeGeneration
-        guard let version = await ClaudeSwapAccountReader.readVersion(executablePath: executablePath),
+        guard let version = await ClaudeSwapAccountReader.readVersion(executablePath: executablePath, source: source),
               self.claudeSwapTransientState.versionProbeGeneration == generation,
               self.isCurrentClaudeSwapRefresh(executablePath: executablePath, generation: nil)
         else { return }
