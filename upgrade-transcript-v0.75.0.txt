@@ -1,0 +1,313 @@
+
+==== Builds
+base (released v0.75.0): 4668969c8507d75e2f173b72a742c92f97e60344
+
+==== Base vs the PR's merge base: does the release persist anything differently?
+$ git -C ~/worktrees/codexbar-tcr merge-base --is-ancestor 4668969c8507d75e2f173b72a742c92f97e60344 052ded4136dd3e2daa39edb59d33236fcb9c6be6
+[exit 0]
+$ git -C ~/worktrees/codexbar-tcr diff --stat 4668969c8507d75e2f173b72a742c92f97e60344 052ded4136dd3e2daa39edb59d33236fcb9c6be6
+ CHANGELOG.md | 2 ++
+ README.md    | 3 ++-
+ version.env  | 4 ++--
+ 3 files changed, 6 insertions(+), 3 deletions(-)
+[exit 0]
+$ git diff --stat <base> <merge base> -- Sources Package.swift   (empty means identical code)
+[lines: 0]
+head (PR branch):                    c5309162cf34c07e622d5c8b1cebce32f23550a1
+
+==== Real ~/Library/Application Support/CodexBar BEFORE (find -maxdepth 2)
+~/Library/Application Support/CodexBar
+~/Library/Application Support/CodexBar/ClaudeProbe
+~/Library/Application Support/CodexBar/ClaudeProbe/.claude
+~/Library/Application Support/CodexBar/codex-account-snapshots.json
+~/Library/Application Support/CodexBar/cookie-cache.lock
+~/Library/Application Support/CodexBar/managed-codex-homes
+~/Library/Application Support/CodexBar/managed-codex-homes/2140B8E8-B49E-4CCF-91E8-0660C06EE40F
+
+==== Isolation preflight: where Foundation resolves paths under this environment
+<scratch>/home/Library/Application Support
+<scratch>/home/Library/Caches
+<scratch>/home
+control (no CFFIXED_USER_HOME, HOME only): ~/Library/Application Support
+
+==== Config (written once; steps 1 and 2 share it untouched)
+$ cat <scratch>/config/config.json
+{
+  "version": 1,
+  "providers": [
+    {
+      "id": "claude",
+      "enabled": true,
+      "source": "oauth",
+      "claudeSwapEnabled": true,
+      "claudeSwapExecutablePath": "<scratch>/bin/cswap"
+    },
+    {
+      "id": "codex",
+      "enabled": false
+    }
+  ]
+}
+[exit 0]
+claudeSwapSource key present: false
+
+==== Widget pins the base writes: claude/swap:<slot>:sha256(<slot> NUL <email>), computed here in shell
+(the CLI cannot print pins; the branch test that pins these bytes is
+ ClaudeSwapTcrConsumerTests "claude-swap widget pins keep the exact bytes main writes")
+claude/swap:1:b532ce205cb83183a02c4a2695d3b20640363730dcff655a8ca50754b53c95b0
+claude/swap:2:b545471dd4a5dae48e01a10c565139e4d40b4a428f4594e7440b31868900062d
+
+==== STEP 1  base CLI (released v0.75.0), claude-swap source (key absent)
+$ <scratch>/bin/cswap --list --json
+{"schemaVersion": 1, "activeAccountNumber": 1, "accounts": [
+ {"number": 1, "email": "alice@example.com", "organizationName": "", "active": true, "usageStatus": "ok",
+  "usageFetchedAt": "2026-10-14T12:08:55Z", "disabled": false,
+  "usage": {"fiveHour": {"pct": 100.0, "resetsAt": "2026-10-14T14:08:55Z"}, "sevenDay": {"pct": 40.0, "resetsAt": "2026-10-19T12:08:55Z"}}},
+ {"number": 2, "email": "bob@example.com", "organizationName": "", "active": false, "usageStatus": "ok",
+  "usageFetchedAt": "2026-10-14T12:08:55Z", "disabled": false,
+  "usage": {"fiveHour": {"pct": 20.0, "resetsAt": "2026-10-14T14:08:55Z"}, "sevenDay": {"pct": 60.0, "resetsAt": "2026-10-19T12:08:55Z"}}}
+]}
+[exit 0]
+$ [base] CodexBarCLI cards --provider claude --no-color
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ Claude [claude-swap]                │  │ Claude [claude-swap]                │
+│ @ alice@example.com [active]        │  │ @ bob@example.com                   │
+│ ─────────────────────────────────── │  │ ─────────────────────────────────── │
+│ Session                     0% left │  │ Session                    80% left │
+│ [                                 ] │  │ [ ━━━━━━━━━━━━━━━━━━━━━━━━        ] │
+│ Reset in 2h                         │  │ Reset in 2h                         │
+│                                     │  │                                     │
+│ Weekly                     60% left │  │ Weekly                     40% left │
+│ [ ━━━━━━━━━━━━━━━━━━              ] │  │ [ ━━━━━━━━━━━━                    ] │
+│ Reset in 5d                         │  │ Reset in 5d                         │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+[exit 0]
+$ [base] CodexBarCLI dashboard --pretty --timeout 20 --output <scratch>/dashboard.json
+[exit 0]
+$ jq <dashboard.json>  (Claude accounts: id, label, active, windows, error)
+{"id":"claude-swap:1","label":"alice@example.com","active":true,"windows":["session 100%","weekly 40%"],"error":null}
+{"id":"claude-swap:2","label":"bob@example.com","active":false,"windows":["session 20%","weekly 60%"],"error":null}
+
+==== STEP 1  persisted by the base (released v0.75.0)
+./.codexbar/antigravity/agy-session.lock
+./.codexbar/claude-oauth-cache.lock
+./Library/Application Support/CodexBar/claude-swap-retained-usage.json
+./Library/Application Support/CodexBar/cookie-cache.lock
+./Library/Caches/CodexBar/cost-usage/claude-v6.json
+./Library/Caches/CodexBar/cost-usage/claude-v6.report-memo.json
+./Library/Caches/CodexBar/cost-usage/pi-sessions-v9.json
+./Library/Caches/CodexBar/model-pricing/models-dev-v1.json
+./Library/HTTPStorages/CodexBarCLI/httpstorages.sqlite
+./Library/HTTPStorages/CodexBarCLI/httpstorages.sqlite-shm
+./Library/HTTPStorages/CodexBarCLI/httpstorages.sqlite-wal
+$ jq <retained file>  (source, opaqueID, accountFingerprint, primary.usedPercent, secondary.usedPercent)
+{"source":"(absent: claude-swap)","opaqueID":"1","accountFingerprint":"b532ce205cb83183a02c4a2695d3b20640363730dcff655a8ca50754b53c95b0","primary":100,"secondary":40}
+{"source":"(absent: claude-swap)","opaqueID":"2","accountFingerprint":"b545471dd4a5dae48e01a10c565139e4d40b4a428f4594e7440b31868900062d","primary":20,"secondary":60}
+sha256 28bc1160129d9fb29a5e2f8861441d1d7fdc0acaa146b1b321f61c21153e225a
+
+==== STEP 2  PR branch CLI, SAME config, SAME persisted data
+config sha256 unchanged since step 1: yes
+retained file unchanged since step 1: yes
+$ <scratch>/bin/cswap --list --json
+{
+  "schemaVersion": 1,
+  "activeAccountNumber": 1,
+  "accounts": [
+    {
+      "number": 1,
+      "email": "alice@example.com",
+      "organizationName": "",
+      "active": true,
+      "usageStatus": "unavailable",
+      "disabled": false,
+      "usage": {}
+    },
+    {
+      "number": 2,
+      "email": "bob@example.com",
+      "organizationName": "",
+      "active": false,
+      "usageStatus": "ok",
+      "usageFetchedAt": "2026-10-14T12:08:55Z",
+      "disabled": false,
+      "usage": {
+        "fiveHour": {
+          "pct": 20.0,
+          "resetsAt": "2026-10-14T14:08:55Z"
+        },
+        "sevenDay": {
+          "pct": 60.0,
+          "resetsAt": "2026-10-19T12:08:55Z"
+        }
+      }
+    }
+  ]
+}
+[exit 0]
+claudeSwapSource in config: (absent)  -> resolves to claude-swap (the branch default)
+$ [head] CodexBarCLI cards --provider claude --no-color
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ Claude [claude-swap]                │  │ Claude [claude-swap]                │
+│ @ alice@example.com [active]        │  │ @ bob@example.com                   │
+│ ─────────────────────────────────── │  │ ─────────────────────────────────── │
+│ Session limit reached. Resets in    │  │ Session                    80% left │
+│ 2h.                                 │  │ [ ━━━━━━━━━━━━━━━━━━━━━━━━        ] │
+│ Session                     0% left │  │ Reset in 2h                         │
+│ [                                 ] │  │                                     │
+│ Reset in 2h                         │  │ Weekly                     40% left │
+│                                     │  │ [ ━━━━━━━━━━━━                    ] │
+│ Weekly                     60% left │  │ Reset in 5d                         │
+│ [ ━━━━━━━━━━━━━━━━━━              ] │  │                                     │
+│ Reset in 5d                         │  │                                     │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+[exit 0]
+$ [head] CodexBarCLI dashboard --pretty --timeout 20 --output <scratch>/dashboard.json
+[exit 0]
+$ jq <dashboard.json>  (Claude accounts: id, label, active, windows, error)
+{"id":"claude-swap:1","label":"alice@example.com","active":true,"windows":["session 100%","weekly 40%"],"error":"Session limit reached. Resets in 2h."}
+{"id":"claude-swap:2","label":"bob@example.com","active":false,"windows":["session 20%","weekly 60%"],"error":null}
+
+==== STEP 2  persisted file after the PR branch rewrote it
+$ jq <retained file>  (source, opaqueID, accountFingerprint, primary.usedPercent, secondary.usedPercent)
+{"source":"(absent: claude-swap)","opaqueID":"1","accountFingerprint":"b532ce205cb83183a02c4a2695d3b20640363730dcff655a8ca50754b53c95b0","primary":100,"secondary":40}
+{"source":"(absent: claude-swap)","opaqueID":"2","accountFingerprint":"b545471dd4a5dae48e01a10c565139e4d40b4a428f4594e7440b31868900062d","primary":20,"secondary":60}
+sha256 ef98a559f79973b1f1a475ebc0f9b438f17ec02dbf83b22a0a16e61d4028233d
+fingerprints identical to step 1: yes
+whole file content identical to step 1 (jq -S, key order ignored): yes
+pins rebuilt from the retained file equal the pins the base writes: yes
+
+==== STEP 2 control: same branch, same input, retained file removed (alice must lose her 100%)
+$ [head] CodexBarCLI cards --provider claude --no-color   (control home, no retained file)
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ Claude [claude-swap]                │  │ Claude [claude-swap]                │
+│ @ alice@example.com [active]        │  │ @ bob@example.com                   │
+│ ─────────────────────────────────── │  │ ─────────────────────────────────── │
+│ Usage unavailable.                  │  │ Session                    80% left │
+│                                     │  │ [ ━━━━━━━━━━━━━━━━━━━━━━━━        ] │
+│                                     │  │ Reset in 2h                         │
+│                                     │  │                                     │
+│                                     │  │ Weekly                     40% left │
+│                                     │  │ [ ━━━━━━━━━━━━                    ] │
+│                                     │  │ Reset in 5d                         │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+[exit 0]
+
+==== STEP 3  PR branch CLI, config switched to tcr
+$ cat <scratch>/config/config.json
+{
+  "version": 1,
+  "providers": [
+    {
+      "id": "claude",
+      "enabled": true,
+      "source": "oauth",
+      "claudeSwapEnabled": true,
+      "claudeSwapExecutablePath": "<scratch>/bin/tcr",
+      "claudeSwapSource": "tcr"
+    },
+    {
+      "id": "codex",
+      "enabled": false
+    }
+  ]
+}
+[exit 0]
+retained file going in (from step 2):
+$ jq <retained file>  (source, opaqueID, accountFingerprint, primary.usedPercent, secondary.usedPercent)
+{"source":"(absent: claude-swap)","opaqueID":"1","accountFingerprint":"b532ce205cb83183a02c4a2695d3b20640363730dcff655a8ca50754b53c95b0","primary":100,"secondary":40}
+{"source":"(absent: claude-swap)","opaqueID":"2","accountFingerprint":"b545471dd4a5dae48e01a10c565139e4d40b4a428f4594e7440b31868900062d","primary":20,"secondary":60}
+sha256 ef98a559f79973b1f1a475ebc0f9b438f17ec02dbf83b22a0a16e61d4028233d
+$ <scratch>/bin/tcr list --json
+{
+  "schemaVersion": 1,
+  "activeAccountNumber": null,
+  "accounts": [
+    {
+      "number": 1,
+      "email": "alice@example.com",
+      "organizationName": "",
+      "active": false,
+      "usageStatus": "unavailable",
+      "disabled": false,
+      "usage": {}
+    },
+    {
+      "number": 2,
+      "email": "bob@example.com",
+      "organizationName": "",
+      "active": false,
+      "usageStatus": "ok",
+      "usageFetchedAt": "2026-10-14T12:08:55Z",
+      "disabled": false,
+      "usage": {
+        "fiveHour": {
+          "pct": 30.0,
+          "resetsAt": "2026-10-14T14:08:55Z"
+        },
+        "sevenDay": {
+          "pct": 60.0,
+          "resetsAt": "2026-10-19T12:08:55Z"
+        }
+      }
+    }
+  ],
+  "supportsAccountSwitching": false
+}
+[exit 0]
+$ [head] CodexBarCLI cards --provider claude --no-color
+╭─────────────────────────────────────╮  ╭─────────────────────────────────────╮
+│ Claude [tcr]                        │  │ Claude [tcr]                        │
+│ @ alice@example.com                 │  │ @ bob@example.com                   │
+│ ─────────────────────────────────── │  │ ─────────────────────────────────── │
+│ Usage unavailable.                  │  │ Session                    70% left │
+│                                     │  │ [ ━━━━━━━━━━━━━━━━━━━━━           ] │
+│                                     │  │ Reset in 2h                         │
+│                                     │  │                                     │
+│                                     │  │ Weekly                     40% left │
+│                                     │  │ [ ━━━━━━━━━━━━                    ] │
+│                                     │  │ Reset in 5d                         │
+╰─────────────────────────────────────╯  ╰─────────────────────────────────────╯
+[exit 0]
+$ [head] CodexBarCLI dashboard --pretty --timeout 20 --output <scratch>/dashboard.json
+[exit 0]
+$ jq <dashboard.json>  (Claude accounts: id, label, active, windows, error)
+{"id":"tcr:1","label":"alice@example.com","active":false,"windows":[],"error":"Usage unavailable."}
+{"id":"tcr:2","label":"bob@example.com","active":false,"windows":["session 30%","weekly 60%"],"error":null}
+
+==== STEP 3  persisted file after the tcr run
+$ jq <retained file>  (source, opaqueID, accountFingerprint, primary.usedPercent, secondary.usedPercent)
+{"source":"tcr","opaqueID":"2","accountFingerprint":"b545471dd4a5dae48e01a10c565139e4d40b4a428f4594e7440b31868900062d","primary":30,"secondary":60}
+sha256 26de7cfffd18084e2f83d999b6a0bb716ae6863c3b094473485ffd0251b50b61
+tcr records carrying a claude-swap window (slot 1 at 100%, or slot 2 at 20%): 0
+claude-swap records left in the file: 0 (the file holds the last run's source only)
+
+==== Expected tcr widget pins (separate namespace, same fingerprint material)
+claude/tcr:1:b532ce205cb83183a02c4a2695d3b20640363730dcff655a8ca50754b53c95b0
+claude/tcr:2:b545471dd4a5dae48e01a10c565139e4d40b4a428f4594e7440b31868900062d
+
+==== Real ~/Library/Application Support/CodexBar AFTER (find -maxdepth 2)
+~/Library/Application Support/CodexBar
+~/Library/Application Support/CodexBar/ClaudeProbe
+~/Library/Application Support/CodexBar/ClaudeProbe/.claude
+~/Library/Application Support/CodexBar/codex-account-snapshots.json
+~/Library/Application Support/CodexBar/cookie-cache.lock
+~/Library/Application Support/CodexBar/managed-codex-homes
+~/Library/Application Support/CodexBar/managed-codex-homes/2140B8E8-B49E-4CCF-91E8-0660C06EE40F
+listing: IDENTICAL before and after
+file contents (sha256 of every file at depth <= 2): IDENTICAL
+
+==== Every file the CLI wrote under the scratch home
+./.codexbar/antigravity/agy-session.lock
+./.codexbar/claude-oauth-cache.lock
+./Library/Application Support/CodexBar/claude-swap-retained-usage.json
+./Library/Application Support/CodexBar/cookie-cache.lock
+./Library/Caches/CodexBar/cost-usage/claude-v6.json
+./Library/Caches/CodexBar/cost-usage/claude-v6.report-memo.json
+./Library/Caches/CodexBar/cost-usage/pi-sessions-v9.json
+./Library/Caches/CodexBar/model-pricing/models-dev-v1.json
+./Library/HTTPStorages/CodexBarCLI/httpstorages.sqlite
+./Library/HTTPStorages/CodexBarCLI/httpstorages.sqlite-shm
+./Library/HTTPStorages/CodexBarCLI/httpstorages.sqlite-wal
+
+==== Result
+every CodexBarCLI call exited 0

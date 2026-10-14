@@ -2,7 +2,7 @@
 # Upgrade proof for steipete/CodexBar#4517 (Claude account source: tcr).
 #
 # Shows, in one isolated run with invented accounts only:
-#   1. upstream main's CLI reads claude-swap accounts and persists its retained usage;
+#   1. the base CLI (BASE_LABEL: upstream main by default, or a release tag) reads claude-swap accounts and persists its retained usage;
 #   2. this branch's CLI reads the SAME config and the SAME persisted file unchanged:
 #      same IDs, same labels, retained usage still binds by fingerprint;
 #   3. switching the config to claudeSwapSource "tcr" gives tcr:<slot> identities and
@@ -58,8 +58,12 @@ cli() {
         CODEXBAR_CONFIG="$CONFIG" \
         CODEXBAR_DISABLE_KEYCHAIN_ACCESS=1 \
         "$bin" "$@"
-    printf '[exit %s]\n' "$?"
+    local rc=$?
+    printf '[exit %s]\n' "$rc"
+    # A CLI that did not run makes every line after it meaningless: fail the whole proof.
+    [ "$rc" -eq 0 ] || CLI_FAILURES=$((CLI_FAILURES + 1))
 }
+CLI_FAILURES=0
 
 real_support_listing() {
     find "$REAL_SUPPORT" -maxdepth 2 | sort
@@ -87,6 +91,7 @@ show_retained() {
 }
 
 show_dashboard_accounts() { # <cli>
+    rm -f "$SCRATCH/dashboard.json"   # never read a previous step's snapshot
     cli "$1" dashboard --pretty --timeout 20 --output "$SCRATCH/dashboard.json"
     printf '$ jq <dashboard.json>  (Claude accounts: id, label, active, windows, error)\n'
     jq -c '.providers[] | select(.id == "claude") | .accounts[]
@@ -95,7 +100,15 @@ show_dashboard_accounts() { # <cli>
 
 main() {
     say "Builds"
-    printf 'base (upstream main, PR merge base): %s\n' "$BASE_REV"
+    printf 'base (%s): %s\n' "$BASE_LABEL" "$BASE_REV"
+    if [ -n "${SOURCE_REPO:-}" ] && [ -n "${MERGE_BASE:-}" ] && [ "$MERGE_BASE" != "$BASE_REV" ]; then
+        say "Base vs the PR's merge base: does the release persist anything differently?"
+        run git -C "$SOURCE_REPO" merge-base --is-ancestor "$BASE_REV" "$MERGE_BASE"
+        run git -C "$SOURCE_REPO" diff --stat "$BASE_REV" "$MERGE_BASE"
+        printf '$ git diff --stat <base> <merge base> -- Sources Package.swift   (empty means identical code)\n'
+        git -C "$SOURCE_REPO" diff --stat "$BASE_REV" "$MERGE_BASE" -- Sources Package.swift
+        printf '[lines: %s]\n' "$(git -C "$SOURCE_REPO" diff --stat "$BASE_REV" "$MERGE_BASE" -- Sources Package.swift | wc -l | tr -d ' ')"
+    fi
     printf 'head (PR branch):                    %s\n' "$HEAD_REV"
 
     say "Real ~/Library/Application Support/CodexBar BEFORE (find -maxdepth 2)"
@@ -182,7 +195,7 @@ JSON
     printf 'claudeSwapSource key present: %s\n' "$(jq '.providers[0] | has("claudeSwapSource")' "$CONFIG")"
     shasum -a 256 "$CONFIG" | cut -d' ' -f1 > "$SCRATCH/config-step1.sha"
 
-    say "Widget pins main writes: claude/swap:<slot>:sha256(<slot> NUL <email>), computed here in shell"
+    say "Widget pins the base writes: claude/swap:<slot>:sha256(<slot> NUL <email>), computed here in shell"
     printf '(the CLI cannot print pins; the branch test that pins these bytes is\n'
     printf ' ClaudeSwapTcrConsumerTests "claude-swap widget pins keep the exact bytes main writes")\n'
     pin_for swap 1 alice@example.com | tee "$SCRATCH/pins-swap.txt"
@@ -190,11 +203,11 @@ JSON
 
     # ---------------------------------------------------------------- step 1
     echo step1 > "$DATA/step"
-    say "STEP 1  upstream main CLI, claude-swap source (key absent)"
+    say "STEP 1  base CLI ($BASE_LABEL), claude-swap source (key absent)"
     run "$BIN/cswap" --list --json
     cli "$BASE_CLI" cards --provider claude --no-color
     show_dashboard_accounts "$BASE_CLI"
-    say "STEP 1  persisted by upstream main"
+    say "STEP 1  persisted by the base ($BASE_LABEL)"
     (cd "$FAKE_HOME" && find . -type f | sort)
     show_retained
     cp "$RETAINED" "$SCRATCH/retained-after-step1.json"
@@ -222,7 +235,7 @@ JSON
     printf 'whole file content identical to step 1 (jq -S, key order ignored): %s\n' \
         "$([ "$(jq -S -c . "$RETAINED")" = "$(jq -S -c . "$SCRATCH/retained-after-step1.json")" ] && echo yes || echo NO)"
     jq -r '.[] | "claude/swap:\(.opaqueID):\(.accountFingerprint)"' "$RETAINED" > "$SCRATCH/pins-from-file.txt"
-    printf 'pins rebuilt from the retained file equal the pins main writes: %s\n' \
+    printf 'pins rebuilt from the retained file equal the pins the base writes: %s\n' \
         "$(cmp -s "$SCRATCH/pins-swap.txt" "$SCRATCH/pins-from-file.txt" && echo yes || echo NO)"
 
     say "STEP 2 control: same branch, same input, retained file removed (alice must lose her 100%)"
@@ -234,7 +247,9 @@ JSON
     env -i HOME="$ctl/home" CFFIXED_USER_HOME="$ctl/home" PATH=/usr/bin:/bin TMPDIR="$SCRATCH/tmp/" \
         TERM=dumb NO_COLOR=1 CODEXBAR_CONFIG="$CONFIG" CODEXBAR_DISABLE_KEYCHAIN_ACCESS=1 \
         "$HEAD_CLI" cards --provider claude --no-color
-    printf '[exit %s]\n' "$?"
+    local ctl_rc=$?
+    printf '[exit %s]\n' "$ctl_rc"
+    [ "$ctl_rc" -eq 0 ] || CLI_FAILURES=$((CLI_FAILURES + 1))
 
     # ---------------------------------------------------------------- step 3
     say "STEP 3  PR branch CLI, config switched to tcr"
@@ -276,10 +291,21 @@ JSON
     fi
     say "Every file the CLI wrote under the scratch home"
     (cd "$FAKE_HOME" && find . -type f | sort)
+
+    say "Result"
+    if [ "$CLI_FAILURES" -ne 0 ]; then
+        printf 'INVALID RUN: %s CodexBarCLI call(s) exited non-zero; nothing above proves anything.\n' "$CLI_FAILURES"
+        return 4
+    fi
+    printf 'every CodexBarCLI call exited 0\n'
 }
 
 BASE_REV="${BASE_REV:-unknown}"
+BASE_LABEL="${BASE_LABEL:-upstream main, PR merge base}"
 HEAD_REV="${HEAD_REV:-unknown}"
+for exe in "$BASE_CLI" "$HEAD_CLI"; do
+    [ -x "$exe" ] || { printf 'STOP: CLI binary missing or not executable: %s\n' "$exe" >&2; exit 2; }
+done
 main > "$RAW" 2>&1
 status=$?
 # Redact the local user name from paths; scratch paths read as <scratch>.
