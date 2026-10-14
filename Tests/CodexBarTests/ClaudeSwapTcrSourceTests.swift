@@ -133,6 +133,66 @@ struct ClaudeSwapTcrSourceTests {
     }
 
     @Test
+    func `retained usage written before the source field still loads as claude-swap`() throws {
+        // The exact record shape main writes: no `source` key at all.
+        let fingerprint = try #require(ClaudeSwapRetainedUsageStore.fingerprint(
+            email: "owner@example.com",
+            slot: "2"))
+        let window = RateWindow(usedPercent: 100, windowMinutes: 300, resetsAt: nil, resetDescription: nil)
+        let primary = try JSONSerialization.jsonObject(with: JSONEncoder().encode(window))
+        let legacy: [[String: Any]] = [[
+            "opaqueID": "2",
+            "accountFingerprint": fingerprint,
+            "primary": primary,
+            "updatedAt": 800_000_000.0,
+        ]]
+        let restored = try ClaudeSwapRetainedUsageStore.decode(JSONSerialization.data(withJSONObject: legacy))
+
+        let account = try #require(restored.first)
+        #expect(restored.count == 1)
+        #expect(account.id == ProviderAccountIdentity(source: "claude-swap", opaqueID: "2"))
+        #expect(account.sourceLabel == "claude-swap")
+        #expect(account.snapshot?.primary?.usedPercent == 100)
+        #expect(account.snapshot?.identity?.loginMethod == "claude-swap")
+        #expect(ClaudeSwapRetainedUsageStore.ownershipFingerprint(for: account) == fingerprint)
+
+        // A live claude-swap account still writes main's shape, so an older build can read it.
+        let live = ProviderAccountUsageSnapshot(
+            id: ProviderAccountIdentity(source: "claude-swap", opaqueID: "2"),
+            provider: .claude,
+            displayLabel: "owner@example.com",
+            accountEmail: "owner@example.com",
+            isActive: true,
+            snapshot: UsageSnapshot(primary: window, secondary: nil, updatedAt: Date(timeIntervalSince1970: 1)),
+            error: nil,
+            sourceLabel: "claude-swap")
+        let written = try #require(ClaudeSwapRetainedUsageStore.encode([live]))
+        let records = try #require(JSONSerialization.jsonObject(with: written) as? [[String: Any]])
+        let record = try #require(records.first)
+        #expect(records.count == 1)
+        #expect(Set(record.keys) == ["opaqueID", "accountFingerprint", "primary", "updatedAt"])
+        #expect(record["accountFingerprint"] as? String == fingerprint)
+    }
+
+    @Test
+    func `a claude provider config written before claudeSwapSource keeps claude-swap`() throws {
+        let legacy = Data(#"""
+        {"id": "claude", "claudeSwapEnabled": true, "claudeSwapExecutablePath": "/opt/example/cswap"}
+        """#.utf8)
+        let config = try JSONDecoder().decode(ProviderConfig.self, from: legacy)
+        #expect(config.claudeSwapSource == nil)
+        #expect(config.resolvedClaudeSwapSource == .claudeSwap)
+        #expect(config.claudeSwapEnabled == true)
+        #expect(config.sanitizedClaudeSwapExecutablePath == "/opt/example/cswap")
+
+        // Re-saving does not add the key, so the file stays readable by builds without tcr.
+        let encoded = try #require(
+            JSONSerialization.jsonObject(with: JSONEncoder().encode(config)) as? [String: Any])
+        #expect(encoded["claudeSwapSource"] == nil)
+        #expect(encoded["claudeSwapEnabled"] as? Bool == true)
+    }
+
+    @Test
     func `config resolves the source and treats unknown values as claude-swap`() {
         var config = ProviderConfig(id: .claude)
         #expect(config.resolvedClaudeSwapSource == .claudeSwap)
