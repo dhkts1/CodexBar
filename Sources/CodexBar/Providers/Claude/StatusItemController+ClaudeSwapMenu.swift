@@ -122,6 +122,7 @@ extension StatusItemController {
                 guard let self, let menu else { return false }
                 return self.store.isCurrentClaudeSwapConfiguration(
                     executablePath: executablePath,
+                    source: .claudeSwap,
                     configurationGeneration: configurationGeneration) &&
                     self.menuSession.isCurrentMenuInteraction(interactionGeneration, for: ObjectIdentifier(menu)) &&
                     self.claudeSwapInspectedAccountID == nil &&

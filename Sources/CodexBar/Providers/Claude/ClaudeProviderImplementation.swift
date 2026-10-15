@@ -426,36 +426,20 @@ private struct ClaudeSwapSetupText {
     init(source: ClaudeSwapAccountSource) {
         switch source {
         case .claudeSwap:
-            self.init(
-                title: "claude-swap executable",
-                subtitle: "Path to the cswap executable (github.com/realiti4/claude-swap).",
-                placeholder: "~/.local/bin/cswap",
-                toggleSubtitle: "Shows usage and lets you switch accounts through `cswap`. " +
-                    "Credentials stay managed by claude-swap; CodexBar never reads them.",
-                missingPathStatus: L("Set the cswap executable path below."))
+            self.title = "claude-swap executable"
+            self.subtitle = "Path to the cswap executable (github.com/realiti4/claude-swap)."
+            self.placeholder = "~/.local/bin/cswap"
+            self.toggleSubtitle = "Shows usage and lets you switch accounts through `cswap`. " +
+                "Credentials stay managed by claude-swap; CodexBar never reads them."
+            self.missingPathStatus = L("Set the cswap executable path below.")
         case .tcr:
             // tcr picks the account for each request, so its list never offers a switch.
-            self.init(
-                title: "tcr executable",
-                subtitle: "Path to the tcr executable (github.com/dhkts1/teamclaude-rs).",
-                placeholder: "/Applications/TcrBar.app/Contents/MacOS/tcr",
-                toggleSubtitle: "Shows usage from `tcr`; it does not switch accounts, because tcr picks " +
-                    "the account for each request. Credentials stay managed by tcr; CodexBar never reads them.",
-                missingPathStatus: L("Set the tcr executable path below."))
+            self.title = "tcr executable"
+            self.subtitle = "Path to the tcr executable (github.com/dhkts1/teamclaude-rs)."
+            self.placeholder = "/Applications/TcrBar.app/Contents/MacOS/tcr"
+            self.toggleSubtitle = "Shows usage from `tcr`; it does not switch accounts, because tcr picks " +
+                "the account for each request. Credentials stay managed by tcr; CodexBar never reads them."
+            self.missingPathStatus = L("Set the tcr executable path below.")
         }
-    }
-
-    private init(
-        title: String,
-        subtitle: String,
-        placeholder: String,
-        toggleSubtitle: String,
-        missingPathStatus: String)
-    {
-        self.title = title
-        self.subtitle = subtitle
-        self.placeholder = placeholder
-        self.toggleSubtitle = toggleSubtitle
-        self.missingPathStatus = missingPathStatus
     }
 }

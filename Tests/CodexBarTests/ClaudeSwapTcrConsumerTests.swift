@@ -133,6 +133,48 @@ struct ClaudeSwapTcrConsumerTests {
         return snapshot.accounts.filter { $0.provider == .claude }.map(\.id)
     }
 
+    @Test
+    func `source changes reject late lists even before runtime cancellation`() async throws {
+        let (settings, store) = self.makeStore()
+        let directory = FileManager.default.temporaryDirectory.appendingPathComponent("tcr-late-\(UUID())")
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        let executable = directory.appendingPathComponent("adapter")
+        let entered = directory.appendingPathComponent("adapter.entered")
+        let release = directory.appendingPathComponent("adapter.release")
+        try #"""
+        #!/bin/sh
+        [ "$1" = "--list" ] && [ "$2" = "--json" ] || exit 64
+        touch "$0.entered"
+        while [ ! -f "$0.release" ]; do /bin/sleep 0.01; done
+        echo '{"schemaVersion":1,"activeAccountNumber":null,"accounts":[
+          {"number":1,"email":"fixture@example.invalid","organizationName":"","active":false,
+           "usageStatus":"ok","usage":{"fiveHour":{"pct":12.5}}}]}'
+        """#.write(to: executable, atomically: true, encoding: .utf8)
+        try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: executable.path)
+        settings.claudeSwapExecutablePath = executable.path
+        store.claudeSwapTransientState.versionProbedPath = executable.path
+        let refresh = Task { await store.refreshClaudeSwapAccounts() }
+        do {
+            let deadline = ContinuousClock.now + .seconds(30)
+            while !FileManager.default.fileExists(atPath: entered.path), ContinuousClock.now < deadline {
+                try await Task.sleep(for: .milliseconds(10))
+            }
+            let didEnter = FileManager.default.fileExists(atPath: entered.path)
+            settings.claudeSwapSource = .tcr
+            try Data().write(to: release)
+            await refresh.value
+            #expect(didEnter)
+            #expect(store.claudeSwapAccountSnapshots.isEmpty)
+            #expect(store.claudeSwapLastRefreshAt == nil)
+            #expect(store.claudeSwapLastError == nil)
+        } catch {
+            try? Data().write(to: release)
+            await refresh.value
+            throw error
+        }
+    }
+
     private func account(source: String, slot: String, active: Bool) -> ProviderAccountUsageSnapshot {
         ProviderAccountUsageSnapshot(
             id: ProviderAccountIdentity(source: source, opaqueID: slot),

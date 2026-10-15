@@ -72,6 +72,10 @@ See [WorkBuddy](workbuddy.md) for the request contract, bounded optional reset l
 [X API](xapi.md) uses the same cookie host with a bundled `ct0` header echo for account discovery and developer-console
 credits. Its script preserves dollar balances and debt without receiving cookie values or adding a native fetcher.
 
+[Claude Platform](claudeplatform.md) sends the opaque `sessionKey` cookie through the same cookie host, so its script
+never sees cookie values. It lists organizations, then reads required `prepaid/credits` (a 403 tries the next API
+organization) and optional `current_spend`, whose failures keep the balance. Both plugin engines run it.
+
 Manus, Muse (muse.ai), Perplexity, Hyper, Raycast, Sakana, and T3 Chat use the shared app implementation. Helmcode retains its tenant
 picker/snapshot, and Qoder retains its regional dashboard action and source-label adapter while sharing cookie UI.
 Provider-owned values resolvers retain token normalization and captured-header allowlists. Replicate and TypeSafe
@@ -314,6 +318,10 @@ abandoned evaluation thread behind. On Apple platforms, `CODEXBAR_PLUGIN_ENGINE=
 engine; the same rollback is available in **Settings → Debug → Provider Plugins** and takes effect after restarting
 CodexBar. JavaScriptCore has no public interrupt API, so a timed-out rollback-engine context is discarded but its
 abandoned evaluation thread can remain alive until process exit.
+
+QuickJS worker jobs drain autoreleased host objects when they finish, preventing refresh temporaries from building up
+across a plugin's lifetime. JavaScriptCore registration and completed-fetch callbacks do not keep retired runtimes or
+contexts alive; active evaluations and the existing fetch watchdog still determine when cleanup can finish.
 
 ## Snapshot result
 

@@ -94,19 +94,21 @@ extension UsageStore {
         let executablePath = self.settings.claudeSwapExecutablePath
         let source = self.settings.claudeSwapSource
         await self.probeClaudeSwapVersionIfNeeded(executablePath: executablePath, source: source)
+        guard self.isCurrentClaudeSwapRefresh(executablePath: executablePath, source: source, generation: generation)
+        else { return }
 
         do {
             let list = try await ClaudeSwapAccountReader.readAccountList(
                 executablePath: executablePath,
                 source: source)
+            guard self.isCurrentClaudeSwapRefresh(
+                executablePath: executablePath, source: source, generation: generation)
+            else { return }
             let snapshots = ClaudeSwapAccountProjection.accountSnapshots(
                 from: list,
                 source: source,
                 previousAccounts: ClaudeSwapRetainedUsageStore.previousAccounts(
                     inMemory: self.claudeSwapAccountSnapshots))
-            guard self.isCurrentClaudeSwapRefresh(executablePath: executablePath, generation: generation) else {
-                return
-            }
             ClaudeSwapRetainedUsageStore.save(snapshots)
             self.claudeSwapAccountSnapshots = snapshots
             self.claudeSwapLastRefreshAt = Date()
@@ -116,7 +118,11 @@ extension UsageStore {
         } catch is CancellationError {
             return
         } catch {
-            guard self.isCurrentClaudeSwapRefresh(executablePath: executablePath, generation: generation) else {
+            guard self.isCurrentClaudeSwapRefresh(
+                executablePath: executablePath,
+                source: source,
+                generation: generation)
+            else {
                 return
             }
             // Retain the last successful snapshots as stale data; the settings
@@ -139,6 +145,7 @@ extension UsageStore {
     {
         guard self.claudeSwapTransientState.task == nil,
               self.shouldFetchClaudeSwapAccounts(),
+              self.settings.claudeSwapSource == .claudeSwap,
               accountID.source == ClaudeSwapAccountProjection.sourceName,
               let account = self.claudeSwapAccountSnapshots.first(where: { $0.id == accountID }),
               account.canActivate,
@@ -170,6 +177,7 @@ extension UsageStore {
             guard let self else { return }
             if self.isCurrentClaudeSwapConfiguration(
                 executablePath: executablePath,
+                source: .claudeSwap,
                 configurationGeneration: configurationGeneration)
             {
                 self.claudeSwapTransientState.lastError = switchError
@@ -186,6 +194,7 @@ extension UsageStore {
                 if case .timedOut = await BoundedTaskJoin(sourceTask: waiter).value(joinGrace: .seconds(5)),
                    self.isCurrentClaudeSwapConfiguration(
                        executablePath: executablePath,
+                       source: .claudeSwap,
                        configurationGeneration: configurationGeneration),
                    self.claudeSwapRefreshTask == previousAdapterTask
                 {
@@ -195,6 +204,7 @@ extension UsageStore {
                 // The ambient refresh schedules this independent read; a replacement read still owns reconciliation.
                 while self.isCurrentClaudeSwapConfiguration(
                     executablePath: executablePath,
+                    source: .claudeSwap,
                     configurationGeneration: configurationGeneration),
                     let adapterTask = self.claudeSwapRefreshTask
                 {
@@ -204,6 +214,7 @@ extension UsageStore {
             }
             let isCurrent = self.isCurrentClaudeSwapConfiguration(
                 executablePath: executablePath,
+                source: .claudeSwap,
                 configurationGeneration: configurationGeneration)
             let currentError = isCurrent ? switchError : nil
             self.claudeSwapTransientState.task = nil
@@ -223,24 +234,30 @@ extension UsageStore {
         let generation = self.claudeSwapTransientState.versionProbeGeneration
         guard let version = await ClaudeSwapAccountReader.readVersion(executablePath: executablePath, source: source),
               self.claudeSwapTransientState.versionProbeGeneration == generation,
-              self.isCurrentClaudeSwapRefresh(executablePath: executablePath, generation: nil)
+              self.isCurrentClaudeSwapRefresh(executablePath: executablePath, source: source, generation: nil)
         else { return }
         self.claudeSwapTransientState.versionProbedPath = executablePath
         self.claudeSwapDetectedVersion = version
     }
 
-    func isCurrentClaudeSwapRefresh(executablePath: String, generation: UInt64?) -> Bool {
+    func isCurrentClaudeSwapRefresh(
+        executablePath: String,
+        source: ClaudeSwapAccountSource,
+        generation: UInt64?) -> Bool
+    {
         !Task.isCancelled &&
             self.isCurrentProviderRefreshGeneration(.claude, generation: generation) &&
-            self.isCurrentClaudeSwapConfiguration(executablePath: executablePath)
+            self.isCurrentClaudeSwapConfiguration(executablePath: executablePath, source: source)
     }
 
     func isCurrentClaudeSwapConfiguration(
         executablePath: String,
+        source: ClaudeSwapAccountSource,
         configurationGeneration: UInt64? = nil) -> Bool
     {
         self.isEnabled(.claude) && self.settings.claudeSwapEnabled &&
             self.settings.claudeSwapExecutablePath == executablePath &&
+            self.settings.claudeSwapSource == source &&
             (configurationGeneration == nil ||
                 self.claudeSwapTransientState.configurationGeneration == configurationGeneration)
     }

@@ -712,6 +712,12 @@
 "link_website" = "網站";
 "link_twitter" = "Twitter";
 "link_email" = "電子郵件";
+"link_acknowledgements" = "致謝";
+"acknowledgements_footer" = "CodexBar 使用了以下開放原始碼專案構建。";
+"acknowledgements_others" = "其他 %d 人";
+"acknowledgements_author" = "作者";
+"acknowledgements_authors" = "作者";
+"acknowledgements_license" = "授權條款";
 "check_updates_auto" = "自動檢查更新";
 "update_channel" = "更新頻道";
 "check_for_updates" = "檢查更新…";
@@ -1016,17 +1022,12 @@
 "CodexBar found another managed account that already uses the current system account. Resolve the duplicate account before switching." = "CodexBar 發現另一個受管理帳號已使用目前的系統帳號。請先解決重複帳號，再進行切換。";
 "CodexBar will ask macOS Keychain for “%@” so it can decrypt browser cookies and authenticate your account. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求「%@」，以解密瀏覽器 Cookie 並認證你的帳號。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for the Claude Code OAuth token so it can fetch your Claude usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求 Claude Code OAuth token，以取得你的 Claude 使用量。按一下「確定」繼續。";
-"CodexBar will ask macOS Keychain for your Amp cookie header so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 Amp Cookie 標頭，以取得使用量。按一下「確定」繼續。";
-"CodexBar will ask macOS Keychain for your Augment cookie header so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 Augment Cookie 標頭，以取得使用量。按一下「確定」繼續。";
+"CodexBar will ask macOS Keychain for your %@ cookie header so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 %@ Cookie 標頭，以取得使用量。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for your Claude cookie header so it can fetch Claude web usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 Claude Cookie 標頭，以取得 Claude 網頁使用量。按一下「確定」繼續。";
-"CodexBar will ask macOS Keychain for your Cursor cookie header so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 Cursor Cookie 標頭，以取得使用量。按一下「確定」繼續。";
-"CodexBar will ask macOS Keychain for your Factory cookie header so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 Factory Cookie 標頭，以取得使用量。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for your GitHub Copilot token so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 GitHub Copilot token，以取得使用量。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for your Kimi auth token so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 Kimi 認證 token，以取得使用量。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for your MiniMax API token so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 MiniMax API token，以取得使用量。按一下「確定」繼續。";
-"CodexBar will ask macOS Keychain for your MiniMax cookie header so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 MiniMax Cookie 標頭，以取得使用量。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for your OpenAI cookie header so it can fetch Codex dashboard extras. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 OpenAI Cookie 標頭，以取得 Codex 儀表板額外資料。按一下「確定」繼續。";
-"CodexBar will ask macOS Keychain for your OpenCode cookie header so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 OpenCode Cookie 標頭，以取得使用量。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for your Synthetic API key so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 Synthetic API 金鑰，以取得使用量。按一下「確定」繼續。";
 "CodexBar will ask macOS Keychain for your z.ai API token so it can fetch usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求你的 z.ai API token，以取得使用量。按一下「確定」繼續。";
 "Could not open Cursor login in your browser." = "無法在瀏覽器中開啟 Cursor 登入。";
@@ -1458,6 +1459,8 @@
 "menu_bar_layout_size" = "大小";
 "menu_bar_layout_size_small" = "小";
 "menu_bar_layout_size_regular" = "一般";
+"menu_bar_layout_size_large" = "大";
+"menu_bar_layout_monospaced_digits" = "等寬數字";
 "menu_bar_layout_gap" = "間距";
 "menu_bar_layout_gap_tight" = "緊湊";
 "menu_bar_layout_gap_regular" = "一般";
@@ -2392,6 +2395,7 @@
 
 "X API cost history is not available." = "X API 費用歷史無法使用。";
 "Paste a console.x.com Cookie header containing auth_token and ct0." = "貼上包含 auth_token 和 ct0 的 console.x.com Cookie 標頭。";
+"Paste a platform.claude.com Cookie header containing sessionKey." = "貼上包含 sessionKey 的 platform.claude.com Cookie 標頭。";
 "Open X Developer Console" = "開啟 X 開發者主控台";
 "update_available_notification_body" = "點擊開啟更新設定並安裝新版本。";
 // Structured session performance layout.
@@ -2605,3 +2609,8 @@
 "Daily spend · %@" = "每日支出 · %@";
 "Applies to the selected token account “%@”. Each account keeps its own limits." = "適用於所選權杖帳戶「%@」。每個帳戶保留各自的限制。";
 "Applies to the OpenAI API key, not to token accounts." = "適用於 OpenAI API 金鑰，不適用於權杖帳戶。";
+"CodexBar will ask macOS Keychain for the Muse Code login token so it can fetch your Muse Code subscription usage. Click OK to continue." = "CodexBar 將向 macOS 鑰匙圈要求 Muse Code 登入 token，以取得你的 Muse Code 訂閱使用量。按一下「確定」繼續。";
+/* Claude Platform provider */
+"API credit" = "API 額度";
+"Purchased credit" = "已購買額度";
+"Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform 顯示 Console 額度餘額和每月支出，而不是本地 token 成本歷史記錄。";

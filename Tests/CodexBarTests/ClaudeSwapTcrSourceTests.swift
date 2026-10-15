@@ -4,7 +4,7 @@ import Testing
 
 /// tcr (teamclaude-rs) prints claude-swap's list schema v1 from `tcr list --json`.
 /// `tcr-list-v1.json` is tcr's own contract fixture (`tests/fixtures/cswap-list-v1.json`
-/// in teamclaude-rs), copied verbatim, so these tests pin what tcr really emits.
+/// in teamclaude-rs), with a synthetic model display label; these tests pin its wire shape.
 struct ClaudeSwapTcrSourceTests {
     private func fixture() throws -> Data {
         let url = try #require(Bundle.module.url(
