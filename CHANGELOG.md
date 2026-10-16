@@ -35,6 +35,7 @@
 - Usage cards: distinguish plan renewal dates from quota resets with “Plan renews” wording across all 23 locales (#4540). Thanks @emanuelst!
 - Antigravity: prefer explicit OAuth paid-tier labels and hide a contradictory Free label when measured five-hour quotas are available (#4565). Thanks @mvicari!
 - Claude: release macOS sleep inhibitors after passive CLI session probes (#4544). Thanks @iamyeizi!
+- Claude: show session forecasts on claude-swap account cards using separate usage histories for each email and workspace (#4566). Thanks @ViaxCo!
 - Widgets: include optional provider details in snapshot JSON so Claude Cloud credits retain their remaining balance, grant total, and expiry without changing quota rows (#4546). Thanks @djbclark!
 
 ## 0.76.0 — 2026-10-15
