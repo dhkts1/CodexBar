@@ -1451,6 +1451,9 @@
 "menu_bar_layout_token_runs_out" = "Tar slut";
 "menu_bar_layout_token_cost_today" = "Kostnad idag";
 "menu_bar_layout_token_cost_window" = "Kostnad (Historikfönster)";
+"menu_bar_layout_token_spend" = "Utgifter %";
+"menu_bar_layout_token_spend_pace" = "Utgiftstakt";
+"menu_bar_layout_token_spend_budget" = "Utgifter / budget";
 "menu_bar_layout_token_space" = "Blanksteg";
 "menu_bar_layout_token_line_break" = "Radbrytning";
 "menu_bar_layout_token_separator_accessibility" = "Avgränsarpunkt";
@@ -1613,6 +1616,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "Sessionen nästan förbrukad";
 "menu_bar_layout_conditional_default_either_high" = "Session eller vecka ligger högt";
 "menu_bar_layout_conditional_default_scoped_weekly" = "Modellvecka över 60 % använt";
+"menu_bar_layout_conditional_default_spend_high" = "Utgifter över 90 % använt";
 "Visible usage items" = "Synliga användningsposter";
 "Restore Defaults" = "Återställ standardvärden";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "Välj vilka användningsrader som visas i den här leverantörens meny, förhandsvisningen i Inställningar och Översikt.";
@@ -1931,7 +1935,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "Uppdatera profilen innan du uppdaterar OpenAI webbdata.";
 "Refreshing account status…" = "Uppdaterar kontostatus...";
 "Remaining budget compared with an ideal steady burn rate." = "Återstående budget jämfört med en idealisk jämn förbränningshastighet.";
-"Renews: %@" = "Förnyar: %@";
+"Plan renews: %@" = "Abonnemanget förnyas: %@";
 "Request quota" = "Begär Kvot";
 "Requesting login…" = "Begär inloggning...";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "Krävs. Ange en vanlig API-nyckel eller en Management API-nyckel här. Hanteringsnycklar aktiverar även kontoaktivitet på den officiella OpenRouter API.";
@@ -2518,6 +2522,8 @@
 "Pace sign" = "Tecken för förbrukningstakt";
 "Ahead of pace is +" = "Över förbrukningstakten är +";
 "Reserve is +" = "Reserv är +";
+"Back" = "Bakåt";
+"Forward" = "Framåt";
 
 "cost_reset_inferred_tooltip" = "Antaget: %@ rapporterar inte detta datum. Månatliga utgiftsgränser återställs den 1:a kl. 00:00 UTC.";
 /* fal provider credentials */
@@ -2635,3 +2641,26 @@
 "API credit" = "API-kredit";
 "Purchased credit" = "Köpt kredit";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform visar Console-kreditsaldo och månadsutgifter, inte lokal tokenkostnadshistorik.";
+
+/* App-managed HTTP server */
+"http_server_title" = "HTTP-server";
+"http_server_enable" = "Aktivera HTTP-server";
+"http_server_bind" = "IPv4-lyssningsadress";
+"http_server_port" = "Port";
+"http_server_token" = "Servertoken";
+"http_server_show" = "Visa";
+"http_server_generate" = "Generera";
+"http_server_cache" = "Cacheintervall (sekunder)";
+"http_server_timeout" = "Tidsgräns för begäran (sekunder; 0 inaktiverar)";
+"http_server_all_accounts" = "Inkludera alla konton i ögonblicksbilder";
+"http_server_identity" = "Identitet i översikten";
+"http_server_redacted" = "Maskerad";
+"http_server_warning" = "Delar användning, kostnader samt konto- och projektinformation, aldrig leverantörernas inloggningsuppgifter. HTTP skickar servertoken okrypterad. Använd endast en betrodd VPN- eller Tailscale-anslutning.";
+"http_server_plain_http" = "Tillåt okrypterad HTTP utanför denna Mac";
+"http_server_dashboard" = "Översikt";
+"http_server_wildcard" = "Ersätt 0.0.0.0 på andra enheter med denna Macs IPv4-adress för VPN eller Tailscale.";
+"http_server_footer" = "Av som standard. Startar med CodexBar och stoppas när det avslutas. Inställningar och token stannar på denna Mac och varken synkroniseras eller exporteras. Håll Mac-datorn vaken för fjärråtkomst.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "Claude-skrivbordsappen";
+"Use Claude desktop app cookies" = "Använd cookies från Claude-skrivbordsappen";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "För webbanvändning används kontot som är inloggat i Claude.app i stället för webbläsarkontot.";

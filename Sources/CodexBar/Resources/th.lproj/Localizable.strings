@@ -1456,6 +1456,9 @@
 "menu_bar_layout_token_runs_out" = "หมด";
 "menu_bar_layout_token_cost_today" = "ค่าใช้จ่ายวันนี้";
 "menu_bar_layout_token_cost_window" = "ค่าใช้จ่าย (กรอบเวลาประวัติ)";
+"menu_bar_layout_token_spend" = "ค่าใช้จ่าย %";
+"menu_bar_layout_token_spend_pace" = "อัตราค่าใช้จ่าย";
+"menu_bar_layout_token_spend_budget" = "ค่าใช้จ่าย / งบประมาณ";
 "menu_bar_layout_token_space" = "ช่องว่าง";
 "menu_bar_layout_token_line_break" = "ขึ้นบรรทัดใหม่";
 "menu_bar_layout_token_separator_accessibility" = "จุดคั่น";
@@ -1618,6 +1621,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "เซสชันเกือบหมด";
 "menu_bar_layout_conditional_default_either_high" = "เซสชันหรือรายสัปดาห์อยู่ในระดับสูง";
 "menu_bar_layout_conditional_default_scoped_weekly" = "รายสัปดาห์ตามโมเดลเกิน 60%";
+"menu_bar_layout_conditional_default_spend_high" = "ใช้ค่าใช้จ่ายเกิน 90%";
 "Visible usage items" = "รายการการใช้งานที่มองเห็น";
 "Restore Defaults" = "คืนค่าเริ่มต้น";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "เลือกแถวการใช้งานที่จะแสดงในเมนูของผู้ให้บริการนี้ ตัวอย่างการตั้งค่า และภาพรวม";
@@ -1936,7 +1940,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "รีเฟรชโปรไฟล์ก่อนรีเฟรชข้อมูลเว็บ OpenAI";
 "Refreshing account status…" = "กำลังรีเฟรชสถานะบัญชี...";
 "Remaining budget compared with an ideal steady burn rate." = "งบประมาณที่เหลืออยู่เมื่อเทียบกับอัตราการเผาไหม้ที่มั่นคงในอุดมคติ";
-"Renews: %@" = "ต่ออายุ: %@";
+"Plan renews: %@" = "ต่ออายุแผน: %@";
 "Request quota" = "ขอ โควต้า";
 "Requesting login…" = "กำลังขอเข้าสู่ระบบ...";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "จำเป็น ป้อนคีย์ API ปกติหรือคีย์การจัดการ API ที่นี่ คีย์การจัดการยังเปิดใช้งานกิจกรรมบัญชีใน OpenRouter API อย่างเป็นทางการ";
@@ -2523,6 +2527,8 @@
 "Pace sign" = "เครื่องหมายอัตราการใช้งาน";
 "Ahead of pace is +" = "ใช้เร็วกว่าที่ควรเป็นคือ +";
 "Reserve is +" = "โควตาสำรองคือ +";
+"Back" = "ย้อนกลับ";
+"Forward" = "ไปข้างหน้า";
 
 "cost_reset_inferred_tooltip" = "ประมาณการ: %@ ไม่รายงานวันที่นี้ วงเงินค่าใช้จ่ายรายเดือนจะรีเซ็ตเวลา 00:00 UTC ของวันที่ 1";
 /* fal provider credentials */
@@ -2638,3 +2644,26 @@
 "API credit" = "เครดิต API";
 "Purchased credit" = "เครดิตที่ซื้อ";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform แสดงยอดเครดิตและการใช้จ่ายรายเดือนของ Console ไม่ใช่ประวัติต้นทุนโทเค็นในเครื่อง";
+
+/* App-managed HTTP server */
+"http_server_title" = "เซิร์ฟเวอร์ HTTP";
+"http_server_enable" = "เปิดใช้งานเซิร์ฟเวอร์ HTTP";
+"http_server_bind" = "ที่อยู่ IPv4 สำหรับรับการเชื่อมต่อ";
+"http_server_port" = "พอร์ต";
+"http_server_token" = "โทเค็นเซิร์ฟเวอร์";
+"http_server_show" = "แสดง";
+"http_server_generate" = "สร้าง";
+"http_server_cache" = "ช่วงเวลาแคช (วินาที)";
+"http_server_timeout" = "เวลารอคำขอ (วินาที; 0 เพื่อปิด)";
+"http_server_all_accounts" = "รวมทุกบัญชีในสแนปช็อต";
+"http_server_identity" = "ข้อมูลระบุตัวตนบนแดชบอร์ด";
+"http_server_redacted" = "ปกปิด";
+"http_server_warning" = "เปิดเผยการใช้งาน ค่าใช้จ่าย และข้อมูลบัญชีกับโครงการ แต่ไม่เปิดเผยข้อมูลรับรองของผู้ให้บริการ HTTP ส่งโทเค็นเซิร์ฟเวอร์โดยไม่เข้ารหัส ใช้เฉพาะการเชื่อมต่อ VPN หรือ Tailscale ที่เชื่อถือได้";
+"http_server_plain_http" = "อนุญาต HTTP ที่ไม่เข้ารหัสจากภายนอก Mac เครื่องนี้";
+"http_server_dashboard" = "แดชบอร์ด";
+"http_server_wildcard" = "บนอุปกรณ์อื่น ให้แทนที่ 0.0.0.0 ด้วยที่อยู่ IPv4 ของ VPN หรือ Tailscale ของ Mac เครื่องนี้";
+"http_server_footer" = "ปิดไว้โดยค่าเริ่มต้น เริ่มพร้อม CodexBar และหยุดเมื่อออกจากแอป การตั้งค่าและโทเค็นอยู่บน Mac เครื่องนี้และไม่รวมในการซิงค์หรือส่งออก ให้ Mac ตื่นอยู่เพื่อเข้าถึงจากระยะไกล";
+/* Claude desktop cookie source */
+"Claude desktop app" = "แอป Claude บนเดสก์ท็อป";
+"Use Claude desktop app cookies" = "ใช้คุกกี้จากแอป Claude บนเดสก์ท็อป";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "สำหรับการใช้งานเว็บ ให้ใช้บัญชีที่ลงชื่อเข้าใช้ใน Claude.app แทนบัญชีในเบราว์เซอร์";

@@ -1456,6 +1456,9 @@
 "menu_bar_layout_token_runs_out" = "Termina";
 "menu_bar_layout_token_cost_today" = "Costo oggi";
 "menu_bar_layout_token_cost_window" = "Costo (Finestra storica)";
+"menu_bar_layout_token_spend" = "Spesa %";
+"menu_bar_layout_token_spend_pace" = "Ritmo spesa";
+"menu_bar_layout_token_spend_budget" = "Spesa / bilancio";
 "menu_bar_layout_token_space" = "Spazio";
 "menu_bar_layout_token_line_break" = "Interruzione di riga";
 "menu_bar_layout_token_separator_accessibility" = "Punto separatore";
@@ -1618,6 +1621,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "Sessione quasi esaurita";
 "menu_bar_layout_conditional_default_either_high" = "Sessione o settimana a livello alto";
 "menu_bar_layout_conditional_default_scoped_weekly" = "Settimana per modello oltre il 60%";
+"menu_bar_layout_conditional_default_spend_high" = "Spesa oltre il 90% usata";
 "Visible usage items" = "Elementi di utilizzo visibili";
 "Restore Defaults" = "Ripristina impostazioni predefinite";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "Scegli quali righe di utilizzo mostrare nel menu di questo provider, nell’anteprima delle Impostazioni e nella Panoramica.";
@@ -1936,7 +1940,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "Aggiorna il profilo prima di aggiornare i dati web OpenAI.";
 "Refreshing account status…" = "Aggiornamento dello stato dell'account…";
 "Remaining budget compared with an ideal steady burn rate." = "Budget rimanente rispetto a una velocità di combustione costante ideale.";
-"Renews: %@" = "Rinnova: %@";
+"Plan renews: %@" = "Il piano si rinnova: %@";
 "Request quota" = "Richiedi Limite";
 "Requesting login…" = "Richiesta di accesso…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "Obbligatorio. Inserisci qui una chiave API normale o una chiave di gestione API. Le chiavi di gestione abilitano anche l'attività dell'account sullo OpenRouter API ufficiale.";
@@ -2523,6 +2527,8 @@
 "Pace sign" = "Segno del ritmo";
 "Ahead of pace is +" = "Oltre il ritmo è +";
 "Reserve is +" = "La riserva è +";
+"Back" = "Indietro";
+"Forward" = "Avanti";
 
 "cost_reset_inferred_tooltip" = "Dedotto: %@ non comunica questa data. I limiti di spesa mensili si reimpostano alle 00:00 UTC del giorno 1.";
 /* fal provider credentials */
@@ -2640,3 +2646,26 @@
 "API credit" = "Credito API";
 "Purchased credit" = "Credito acquistato";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform mostra il saldo del credito e la spesa mensile della Console, non la cronologia locale dei costi dei token.";
+
+/* App-managed HTTP server */
+"http_server_title" = "Server HTTP";
+"http_server_enable" = "Abilita server HTTP";
+"http_server_bind" = "Indirizzo IPv4 di ascolto";
+"http_server_port" = "Porta";
+"http_server_token" = "Token del server";
+"http_server_show" = "Mostra";
+"http_server_generate" = "Genera";
+"http_server_cache" = "Intervallo cache (secondi)";
+"http_server_timeout" = "Timeout richieste (secondi; 0 disabilita)";
+"http_server_all_accounts" = "Includi tutti gli account nelle istantanee";
+"http_server_identity" = "Identità nella dashboard";
+"http_server_redacted" = "Oscurata";
+"http_server_warning" = "Espone utilizzo, costi e informazioni su account e progetti, mai le credenziali dei provider. HTTP invia il token del server senza crittografia. Usa solo una connessione VPN o Tailscale attendibile.";
+"http_server_plain_http" = "Consenti HTTP non crittografato fuori da questo Mac";
+"http_server_dashboard" = "Dashboard";
+"http_server_wildcard" = "Sugli altri dispositivi, sostituisci 0.0.0.0 con l’indirizzo IPv4 VPN o Tailscale di questo Mac.";
+"http_server_footer" = "Disattivato per impostazione predefinita. Si avvia con CodexBar e si arresta alla chiusura. Impostazioni e token restano su questo Mac e sono esclusi da sincronizzazione ed esportazioni. Mantieni il Mac attivo per l’accesso remoto.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "App desktop Claude";
+"Use Claude desktop app cookies" = "Usa i cookie dell’app desktop Claude";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "Per l’utilizzo web, usa l’account connesso a Claude.app anziché quello del browser.";

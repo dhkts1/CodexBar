@@ -1456,6 +1456,9 @@
 "menu_bar_layout_token_runs_out" = "ينفد";
 "menu_bar_layout_token_cost_today" = "تكلفة اليوم";
 "menu_bar_layout_token_cost_window" = "تكلفة (نافذة التاريخ)";
+"menu_bar_layout_token_spend" = "الإنفاق %";
+"menu_bar_layout_token_spend_pace" = "وتيرة الإنفاق";
+"menu_bar_layout_token_spend_budget" = "الإنفاق / الميزانية";
 "menu_bar_layout_token_space" = "مسافة";
 "menu_bar_layout_token_line_break" = "فاصل سطر";
 "menu_bar_layout_token_separator_accessibility" = "نقطة فاصلة";
@@ -1618,6 +1621,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "الجلسة على وشك النفاد";
 "menu_bar_layout_conditional_default_either_high" = "الجلسة أو الأسبوع في مستوى مرتفع";
 "menu_bar_layout_conditional_default_scoped_weekly" = "نافذة الطراز الأسبوعية فوق 60٪";
+"menu_bar_layout_conditional_default_spend_high" = "استُخدم أكثر من 90٪ من الإنفاق";
 "Visible usage items" = "عناصر الاستخدام المرئية";
 "Restore Defaults" = "استعادة الإعدادات الافتراضية";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "اختر صفوف الاستخدام التي تظهر في قائمة هذا المزوّد ومعاينة الإعدادات والنظرة العامة.";
@@ -1686,7 +1690,7 @@
 "%@m" = "%@د";
 "%d CONNECTED" = "%d متصل";
 "%d DAYS" = "%d يومًا";
-"%d days" = "أيام %d";
+"%d days" = "%d أيام";
 "%d more accounts ready" = "%d المزيد من الحسابات جاهزة";
 "%d percent" = "%d في المئة";
 "%d subscriptions" = "%d اشتراكات";
@@ -1936,7 +1940,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "قم بتحديث ملف التعريف قبل تحديث بيانات الويب OpenAI.";
 "Refreshing account status…" = "جارٍ تحديث حالة الحساب…";
 "Remaining budget compared with an ideal steady burn rate." = "الميزانية المتبقية مقارنة بمعدل حرق ثابت مثالي.";
-"Renews: %@" = "التجديدات: %@";
+"Plan renews: %@" = "تجديد الخطة: %@";
 "Request quota" = "طلب الحصة";
 "Requesting login…" = "جارٍ طلب تسجيل الدخول…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "مطلوب. أدخل مفتاح API العادي أو مفتاح إدارة API هنا. تعمل مفاتيح الإدارة أيضًا على تمكين نشاط الحساب على OpenRouter API الرسمي.";
@@ -2523,6 +2527,8 @@
 "Pace sign" = "إشارة وتيرة الاستخدام";
 "Ahead of pace is +" = "تجاوز الوتيرة هو +";
 "Reserve is +" = "الاحتياطي هو +";
+"Back" = "رجوع";
+"Forward" = "تقدم";
 
 "cost_reset_inferred_tooltip" = "مستنتَج: لا يُبلغ %@ عن هذا التاريخ. تتم إعادة تعيين حدود الإنفاق الشهرية في الساعة 00:00 بالتوقيت العالمي المنسق (UTC) في اليوم الأول من الشهر.";
 /* fal provider credentials */
@@ -2640,3 +2646,26 @@
 "API credit" = "رصيد API";
 "Purchased credit" = "رصيد مشترى";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "يعرض Claude Platform رصيد الائتمان في Console والإنفاق الشهري، وليس سجل تكلفة الرموز المحلي.";
+
+/* App-managed HTTP server */
+"http_server_title" = "خادم HTTP";
+"http_server_enable" = "تفعيل خادم HTTP";
+"http_server_bind" = "عنوان IPv4 للاستماع";
+"http_server_port" = "المنفذ";
+"http_server_token" = "رمز الخادم";
+"http_server_show" = "إظهار";
+"http_server_generate" = "إنشاء";
+"http_server_cache" = "فاصل التخزين المؤقت (ثوانٍ)";
+"http_server_timeout" = "مهلة الطلب (ثوانٍ؛ 0 يعطّلها)";
+"http_server_all_accounts" = "تضمين جميع الحسابات في اللقطات";
+"http_server_identity" = "الهوية في لوحة المعلومات";
+"http_server_redacted" = "محجوبة";
+"http_server_warning" = "يتيح بيانات الاستخدام والتكاليف والحسابات والمشروعات، ولا يتيح بيانات اعتماد المزوّدين مطلقًا. يرسل HTTP رمز الخادم دون تشفير. استخدم اتصال VPN أو Tailscale موثوقًا فقط.";
+"http_server_plain_http" = "السماح باتصال HTTP غير مشفّر من خارج هذا الـ Mac";
+"http_server_dashboard" = "لوحة المعلومات";
+"http_server_wildcard" = "على الأجهزة الأخرى، استبدل 0.0.0.0 بعنوان IPv4 لاتصال VPN أو Tailscale على هذا الـ Mac.";
+"http_server_footer" = "معطّل افتراضيًا. يبدأ مع CodexBar ويتوقف عند إغلاقه. تبقى الإعدادات والرمز على هذا الـ Mac ولا تشملها المزامنة أو التصدير. أبقِ جهاز Mac مستيقظًا للوصول عن بُعد.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "تطبيق Claude لسطح المكتب";
+"Use Claude desktop app cookies" = "استخدام ملفات تعريف الارتباط لتطبيق Claude لسطح المكتب";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "لاستخدام الويب، اتبع الحساب المسجّل الدخول في Claude.app بدلاً من المتصفح.";

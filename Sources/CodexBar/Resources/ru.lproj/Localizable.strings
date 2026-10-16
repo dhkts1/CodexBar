@@ -1454,6 +1454,9 @@
 "menu_bar_layout_token_runs_out" = "Закончится";
 "menu_bar_layout_token_cost_today" = "Расход сегодня";
 "menu_bar_layout_token_cost_window" = "Расход (Окно истории)";
+"menu_bar_layout_token_spend" = "Расходы %";
+"menu_bar_layout_token_spend_pace" = "Темп расходов";
+"menu_bar_layout_token_spend_budget" = "Расходы / бюджет";
 "menu_bar_layout_token_space" = "Пробел";
 "menu_bar_layout_token_line_break" = "Разрыв строки";
 "menu_bar_layout_token_separator_accessibility" = "Точка-разделитель";
@@ -1615,6 +1618,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "Сессия почти исчерпана";
 "menu_bar_layout_conditional_default_either_high" = "Сессия или неделя на высоком уровне";
 "menu_bar_layout_conditional_default_scoped_weekly" = "Недельное окно модели более 60 %";
+"menu_bar_layout_conditional_default_spend_high" = "Расходы использованы более 90 %";
 "Visible usage items" = "Видимые показатели использования";
 "Restore Defaults" = "Восстановить настройки по умолчанию";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "Выберите, какие строки использования отображаются в меню этого провайдера, в предпросмотре настроек и в обзоре.";
@@ -1933,7 +1937,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "Обновите профиль перед обновлением веб-данных OpenAI.";
 "Refreshing account status…" = "Обновление статуса аккаунта…";
 "Remaining budget compared with an ideal steady burn rate." = "Оставшийся бюджет по сравнению с идеальной постоянной скоростью расходования средств.";
-"Renews: %@" = "Обновления: %@";
+"Plan renews: %@" = "Продление плана: %@";
 "Request quota" = "Запрос Квота";
 "Requesting login…" = "Запрос входа…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "Обязательно. Введите здесь обычный ключ API или ключ управления API. Ключи управления также позволяют активировать учетную запись на официальном OpenRouter API.";
@@ -2520,6 +2524,8 @@
 "Pace sign" = "Знак темпа расхода";
 "Ahead of pace is +" = "Опережение темпа — +";
 "Reserve is +" = "Запас — +";
+"Back" = "Назад";
+"Forward" = "Вперед";
 
 "cost_reset_inferred_tooltip" = "Предположительно: %@ не сообщает эту дату. Месячные лимиты расходов сбрасываются 1-го числа в 00:00 UTC.";
 /* fal provider credentials */
@@ -2637,3 +2643,26 @@
 "API credit" = "Кредит API";
 "Purchased credit" = "Купленный кредит";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform показывает баланс кредитов и ежемесячные расходы в Console, а не локальную историю затрат на токены.";
+
+/* App-managed HTTP server */
+"http_server_title" = "HTTP-сервер";
+"http_server_enable" = "Включить HTTP-сервер";
+"http_server_bind" = "IPv4-адрес привязки";
+"http_server_port" = "Порт";
+"http_server_token" = "Токен сервера";
+"http_server_show" = "Показать";
+"http_server_generate" = "Создать";
+"http_server_cache" = "Интервал кэша (секунды)";
+"http_server_timeout" = "Тайм-аут запроса (секунды; 0 отключает)";
+"http_server_all_accounts" = "Включать все аккаунты в снимки";
+"http_server_identity" = "Данные пользователя в панели";
+"http_server_redacted" = "Скрыты";
+"http_server_warning" = "Открывает доступ к использованию, расходам и сведениям об аккаунтах и проектах, но не к учётным данным провайдеров. HTTP передаёт токен сервера без шифрования. Используйте только доверенное соединение VPN или Tailscale.";
+"http_server_plain_http" = "Разрешить незашифрованный HTTP вне этого Mac";
+"http_server_dashboard" = "Панель";
+"http_server_wildcard" = "На других устройствах замените 0.0.0.0 на IPv4-адрес VPN или Tailscale этого Mac.";
+"http_server_footer" = "По умолчанию выключен. Запускается с CodexBar и останавливается при выходе. Настройки и токен остаются на этом Mac и исключены из синхронизации и экспорта. Для удалённого доступа Mac не должен спать.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "Приложение Claude для компьютера";
+"Use Claude desktop app cookies" = "Использовать файлы cookie приложения Claude";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "Для веб-статистики использовать учётную запись в Claude.app вместо учётной записи браузера.";

@@ -1464,6 +1464,9 @@
 "menu_bar_layout_token_runs_out" = "Runs out";
 "menu_bar_layout_token_cost_today" = "Cost today";
 "menu_bar_layout_token_cost_window" = "Cost (History window)";
+"menu_bar_layout_token_spend" = "Spend %";
+"menu_bar_layout_token_spend_pace" = "Spend pace";
+"menu_bar_layout_token_spend_budget" = "Spend / budget";
 "menu_bar_layout_token_space" = "Space";
 "menu_bar_layout_token_line_break" = "Line break";
 "menu_bar_layout_token_separator_accessibility" = "Separator dot";
@@ -1619,6 +1622,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "Session nearly spent";
 "menu_bar_layout_conditional_default_either_high" = "Session or weekly running high";
 "menu_bar_layout_conditional_default_scoped_weekly" = "Scoped weekly over 60% used";
+"menu_bar_layout_conditional_default_spend_high" = "Spend over 90% used";
 "Visible usage items" = "Visible usage items";
 "Restore Defaults" = "Restore Defaults";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "Choose which usage rows appear in this provider's menu, Settings preview, and Overview.";
@@ -1936,7 +1940,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "Refresh the profile before refreshing OpenAI web data.";
 "Refreshing account status…" = "Refreshing account status…";
 "Remaining budget compared with an ideal steady burn rate." = "Remaining budget compared with an ideal steady burn rate.";
-"Renews: %@" = "Renews: %@";
+"Plan renews: %@" = "Plan renews: %@";
 "Request quota" = "Request quota";
 "Requesting login…" = "Requesting login…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API.";
@@ -2523,6 +2527,8 @@
 "Pace sign" = "Pace sign";
 "Ahead of pace is +" = "Ahead of pace is +";
 "Reserve is +" = "Reserve is +";
+"Back" = "Back";
+"Forward" = "Forward";
 
 "cost_reset_inferred_tooltip" = "Inferred: %@ doesn't report this date. Monthly spend caps roll over at 00:00 UTC on the 1st.";
 /* fal provider credentials */
@@ -2641,3 +2647,26 @@
 "API credit" = "API credit";
 "Purchased credit" = "Purchased credit";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform exposes Console credit balance and monthly spend, not local token cost history.";
+
+/* App-managed HTTP server */
+"http_server_title" = "HTTP server";
+"http_server_enable" = "Enable HTTP server";
+"http_server_bind" = "Bind IPv4 address";
+"http_server_port" = "Port";
+"http_server_token" = "Server token";
+"http_server_show" = "Show";
+"http_server_generate" = "Generate";
+"http_server_cache" = "Cache interval (seconds)";
+"http_server_timeout" = "Request timeout (seconds; 0 disables)";
+"http_server_all_accounts" = "Include all accounts in snapshots";
+"http_server_identity" = "Dashboard identity";
+"http_server_redacted" = "Redacted";
+"http_server_warning" = "Exposes usage, costs, account and project information — never provider credentials. HTTP sends the server token unencrypted. Use only on a trusted VPN or Tailscale connection.";
+"http_server_plain_http" = "Allow unencrypted HTTP outside this Mac";
+"http_server_dashboard" = "Dashboard";
+"http_server_wildcard" = "On other devices, replace 0.0.0.0 with this Mac’s VPN or Tailscale IPv4 address.";
+"http_server_footer" = "Off by default. Starts with CodexBar and stops when it quits. Settings and token stay on this Mac and are excluded from sync and exports. Keep the Mac awake for remote access.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "Claude desktop app";
+"Use Claude desktop app cookies" = "Use Claude desktop app cookies";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "For Web usage, follow the account signed into Claude.app instead of a browser.";

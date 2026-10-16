@@ -1456,6 +1456,9 @@
 "menu_bar_layout_token_runs_out" = "تمام می‌شود";
 "menu_bar_layout_token_cost_today" = "هزینهٔ امروز";
 "menu_bar_layout_token_cost_window" = "هزینه (پنجره تاریخچه)";
+"menu_bar_layout_token_spend" = "هزینه %";
+"menu_bar_layout_token_spend_pace" = "سرعت هزینه";
+"menu_bar_layout_token_spend_budget" = "هزینه / بودجه";
 "menu_bar_layout_token_space" = "فاصله";
 "menu_bar_layout_token_line_break" = "شکست خط";
 "menu_bar_layout_token_separator_accessibility" = "نقطهٔ جداکننده";
@@ -1618,6 +1621,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "نشست تقریباً تمام شده";
 "menu_bar_layout_conditional_default_either_high" = "نشست یا هفته در سطح بالا";
 "menu_bar_layout_conditional_default_scoped_weekly" = "پنجره هفتگی مدل بیش از ۶۰٪";
+"menu_bar_layout_conditional_default_spend_high" = "بیش از ۹۰٪ هزینه مصرف شده";
 "Visible usage items" = "موارد قابل مشاهده استفاده";
 "Restore Defaults" = "بازیابی پیش‌فرض‌ها";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "انتخاب کنید کدام ردیف‌های استفاده در منوی این ارائه‌دهنده، پیش‌نمایش تنظیمات و نمای کلی نمایش داده شوند.";
@@ -1686,7 +1690,7 @@
 "%@m" = "%@د";
 "%d CONNECTED" = "%d متصل است";
 "%d DAYS" = "%d روز";
-"%d days" = "روز %d";
+"%d days" = "%d روز";
 "%d more accounts ready" = "%d حساب های بیشتر آماده است";
 "%d percent" = "درصد %d";
 "%d subscriptions" = "%d اشتراک";
@@ -1936,7 +1940,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "قبل از بازخوانی داده های وب OpenAI، نمایه را بازخوانی کنید.";
 "Refreshing account status…" = "در حال تازه کردن وضعیت حساب…";
 "Remaining budget compared with an ideal steady burn rate." = "بودجه باقی مانده در مقایسه با نرخ سوزاندن ثابت ایده آل.";
-"Renews: %@" = "تمدید: %@";
+"Plan renews: %@" = "تمدید طرح: %@";
 "Request quota" = "درخواست سهمیه";
 "Requesting login…" = "در حال درخواست ورود…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "مورد نیاز. یک کلید معمولی API یا یک کلید مدیریت API را در اینجا وارد کنید. کلیدهای مدیریتی همچنین فعالیت حساب را در OpenRouter API رسمی فعال می کنند.";
@@ -2523,6 +2527,8 @@
 "Pace sign" = "علامت آهنگ مصرف";
 "Ahead of pace is +" = "جلوتر از آهنگ مصرف یعنی +";
 "Reserve is +" = "ذخیره یعنی +";
+"Back" = "بازگشت";
+"Forward" = "جلو";
 
 "cost_reset_inferred_tooltip" = "استنباط‌شده: %@ این تاریخ را گزارش نمی‌کند. سقف هزینه ماهانه ساعت 00:00 UTC روز اول ماه ریست می‌شود.";
 /* fal provider credentials */
@@ -2640,3 +2646,26 @@
 "API credit" = "اعتبار API";
 "Purchased credit" = "اعتبار خریداری‌شده";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform موجودی اعتبار و هزینه ماهانه Console را نشان می‌دهد، نه تاریخچه هزینه محلی توکن‌ها.";
+
+/* App-managed HTTP server */
+"http_server_title" = "سرور HTTP";
+"http_server_enable" = "فعال‌سازی سرور HTTP";
+"http_server_bind" = "نشانی IPv4 برای اتصال";
+"http_server_port" = "درگاه";
+"http_server_token" = "توکن سرور";
+"http_server_show" = "نمایش";
+"http_server_generate" = "ایجاد";
+"http_server_cache" = "فاصلهٔ کش (ثانیه)";
+"http_server_timeout" = "مهلت درخواست (ثانیه؛ 0 غیرفعال می‌کند)";
+"http_server_all_accounts" = "گنجاندن همهٔ حساب‌ها در تصویر وضعیت";
+"http_server_identity" = "هویت در داشبورد";
+"http_server_redacted" = "پوشانده‌شده";
+"http_server_warning" = "اطلاعات مصرف، هزینه، حساب و پروژه را در دسترس می‌گذارد، نه اطلاعات ورود ارائه‌دهندگان را. HTTP توکن سرور را بدون رمزگذاری ارسال می‌کند. فقط از اتصال قابل‌اعتماد VPN یا Tailscale استفاده کنید.";
+"http_server_plain_http" = "اجازهٔ HTTP بدون رمزگذاری از بیرون این Mac";
+"http_server_dashboard" = "داشبورد";
+"http_server_wildcard" = "در دستگاه‌های دیگر، 0.0.0.0 را با نشانی IPv4 اتصال VPN یا Tailscale این Mac جایگزین کنید.";
+"http_server_footer" = "به‌طور پیش‌فرض خاموش است. همراه CodexBar شروع و با خروج از آن متوقف می‌شود. تنظیمات و توکن در این Mac می‌مانند و همگام‌سازی یا صادر نمی‌شوند. برای دسترسی از راه دور، Mac را بیدار نگه دارید.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "برنامهٔ دسکتاپ Claude";
+"Use Claude desktop app cookies" = "استفاده از کوکی‌های برنامهٔ دسکتاپ Claude";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "برای مصرف وب، از حساب واردشده در Claude.app به‌جای حساب مرورگر استفاده کنید.";

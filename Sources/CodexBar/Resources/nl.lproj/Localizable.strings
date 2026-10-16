@@ -1452,6 +1452,9 @@
 "menu_bar_layout_token_runs_out" = "Op";
 "menu_bar_layout_token_cost_today" = "Kosten vandaag";
 "menu_bar_layout_token_cost_window" = "Kosten (Geschiedenisvenster)";
+"menu_bar_layout_token_spend" = "Uitgaven %";
+"menu_bar_layout_token_spend_pace" = "Uitgaventempo";
+"menu_bar_layout_token_spend_budget" = "Uitgaven / begroting";
 "menu_bar_layout_token_space" = "Spatie";
 "menu_bar_layout_token_line_break" = "Regeleinde";
 "menu_bar_layout_token_separator_accessibility" = "Scheidingspunt";
@@ -1613,6 +1616,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "Sessie bijna verbruikt";
 "menu_bar_layout_conditional_default_either_high" = "Sessie of week loopt hoog op";
 "menu_bar_layout_conditional_default_scoped_weekly" = "Modelweek boven 60% gebruikt";
+"menu_bar_layout_conditional_default_spend_high" = "Uitgaven boven 90% gebruikt";
 "Visible usage items" = "Zichtbare gebruiksitems";
 "Restore Defaults" = "Standaardinstellingen herstellen";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "Kies welke gebruiksrijen worden weergegeven in het menu van deze provider, het instellingenvoorbeeld en het overzicht.";
@@ -1931,7 +1935,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "Vernieuw het profiel voordat u de OpenAI-webgegevens vernieuwt.";
 "Refreshing account status…" = "Accountstatus vernieuwen…";
 "Remaining budget compared with an ideal steady burn rate." = "Resterend budget vergeleken met een ideale stabiele brandsnelheid.";
-"Renews: %@" = "Vernieuwt: %@";
+"Plan renews: %@" = "Abonnement wordt verlengd: %@";
 "Request quota" = "Quotum aanvragen";
 "Requesting login…" = "Inloggen aanvragen…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "Vereist. Voer hier een gewone API-sleutel of een Management API-sleutel in. Beheersleutels maken ook accountactiviteit mogelijk op de officiële OpenRouter API.";
@@ -2518,6 +2522,8 @@
 "Pace sign" = "Teken van gebruikstempo";
 "Ahead of pace is +" = "Boven het tempo is +";
 "Reserve is +" = "Reserve krijgt +";
+"Back" = "Terug";
+"Forward" = "Vooruit";
 
 "cost_reset_inferred_tooltip" = "Afgeleid: %@ meldt deze datum niet. Maandelijkse bestedingslimieten worden op de 1e om 00:00 UTC gereset.";
 /* fal provider credentials */
@@ -2633,3 +2639,26 @@
 "API credit" = "API-tegoed";
 "Purchased credit" = "Gekocht tegoed";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform toont het Console-tegoed en de maandelijkse uitgaven, niet de lokale tokenkostengeschiedenis.";
+
+/* App-managed HTTP server */
+"http_server_title" = "HTTP-server";
+"http_server_enable" = "HTTP-server inschakelen";
+"http_server_bind" = "IPv4-luisteradres";
+"http_server_port" = "Poort";
+"http_server_token" = "Servertoken";
+"http_server_show" = "Tonen";
+"http_server_generate" = "Genereren";
+"http_server_cache" = "Cache-interval (seconden)";
+"http_server_timeout" = "Time-out voor verzoeken (seconden; 0 schakelt uit)";
+"http_server_all_accounts" = "Alle accounts in momentopnamen opnemen";
+"http_server_identity" = "Identiteit op dashboard";
+"http_server_redacted" = "Afgeschermd";
+"http_server_warning" = "Deelt gebruik, kosten en account- en projectinformatie, nooit inloggegevens van providers. HTTP verstuurt het servertoken onversleuteld. Gebruik alleen een vertrouwde VPN- of Tailscale-verbinding.";
+"http_server_plain_http" = "Onversleutelde HTTP buiten deze Mac toestaan";
+"http_server_dashboard" = "Dashboard";
+"http_server_wildcard" = "Vervang op andere apparaten 0.0.0.0 door het VPN- of Tailscale-IPv4-adres van deze Mac.";
+"http_server_footer" = "Standaard uit. Start met CodexBar en stopt wanneer het afsluit. Instellingen en token blijven op deze Mac en worden niet gesynchroniseerd of geëxporteerd. Houd de Mac wakker voor externe toegang.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "Claude-desktopapp";
+"Use Claude desktop app cookies" = "Cookies van de Claude-desktopapp gebruiken";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "Gebruik voor webverbruik het account dat bij Claude.app is aangemeld in plaats van het browseraccount.";

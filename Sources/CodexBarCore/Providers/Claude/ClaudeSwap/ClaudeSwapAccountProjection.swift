@@ -1,4 +1,9 @@
 import Foundation
+#if canImport(CryptoKit)
+import CryptoKit
+#else
+import Crypto
+#endif
 
 /// Projects parsed schema-v1 list rows (`cswap --list --json`, `tcr list --json`)
 /// into the provider-neutral account snapshot consumed by menus. Identity uses the
@@ -40,16 +45,16 @@ public enum ClaudeSwapAccountProjection {
                 source: source,
                 previous: previousByID[id],
                 now: now)
-            let snapshot = projected.snapshot
             return ProviderAccountUsageSnapshot(
                 id: id,
                 provider: .claude,
                 displayLabel: self.decoratedLabel(label, row: row),
                 accountEmail: row.email.isEmpty ? nil : row.email,
+                historyAccountKey: self.historyAccountKey(for: row, source: source),
                 isActive: row.isActive,
                 canActivate: list.supportsAccountSwitching && self.canActivate(row),
                 usesLastKnownUsage: projected.usesLastKnownUsage,
-                snapshot: snapshot,
+                snapshot: projected.snapshot,
                 error: self.errorText(for: row, source: source, usage: projected, now: now),
                 sourceLabel: source.label)
         }
@@ -292,6 +297,14 @@ public enum ClaudeSwapAccountProjection {
             providerCost: providerCost,
             updatedAt: updatedAt,
             identity: self.identitySnapshot(for: row, source: source))
+    }
+
+    private static func historyAccountKey(for row: ClaudeSwapAccountRow, source: ClaudeSwapAccountSource) -> String? {
+        let email = self.normalizedEmail(row.email)
+        let organization = row.organizationUuid.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
+        guard !email.isEmpty, source == .claudeSwap || !organization.isEmpty else { return nil }
+        let pair = try? JSONEncoder().encode([email, organization])
+        return pair.map { "__claude_swap__:" + SHA256.hash(data: $0).map { String(format: "%02x", $0) }.joined() }
     }
 
     private static func identitySnapshot(

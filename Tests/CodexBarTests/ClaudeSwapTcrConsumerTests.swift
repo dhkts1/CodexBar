@@ -133,9 +133,20 @@ struct ClaudeSwapTcrConsumerTests {
         return snapshot.accounts.filter { $0.provider == .claude }.map(\.id)
     }
 
-    @Test
-    func `source changes reject late lists even before runtime cancellation`() async throws {
+    @Test(arguments: [false, true])
+    func `source changes reject late lists even before runtime cancellation`(whileLoadingHistory: Bool) async throws {
         let (settings, store) = self.makeStore()
+        var releaseHistory = !whileLoadingHistory
+        defer { releaseHistory = true }
+        if whileLoadingHistory {
+            store.planUtilizationHistoryLoaded = false
+            store.planUtilizationHistoryLoadTask = Task { @MainActor in
+                while !releaseHistory {
+                    try? await Task.sleep(for: .milliseconds(10))
+                }
+                store.planUtilizationHistoryLoaded = true
+            }
+        }
         let directory = FileManager.default.temporaryDirectory.appendingPathComponent("tcr-late-\(UUID())")
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
@@ -148,8 +159,8 @@ struct ClaudeSwapTcrConsumerTests {
         touch "$0.entered"
         while [ ! -f "$0.release" ]; do /bin/sleep 0.01; done
         echo '{"schemaVersion":1,"activeAccountNumber":null,"accounts":[
-          {"number":1,"email":"fixture@example.invalid","organizationName":"","active":false,
-           "usageStatus":"ok","usage":{"fiveHour":{"pct":12.5}}}]}'
+          {"number":1,"email":"fixture@example.invalid","organizationUuid":"fixture-org","active":false,
+           "usageStatus":"ok","usage":{"fiveHour":{"pct":12.5,"resetsAt":"2099-01-01T00:00:00Z"}}}]}'
         """#.write(to: executable, atomically: true, encoding: .utf8)
         try FileManager.default.setAttributes([.posixPermissions: 0o700], ofItemAtPath: executable.path)
         settings.claudeSwapExecutablePath = executable.path
@@ -161,14 +172,24 @@ struct ClaudeSwapTcrConsumerTests {
                 try await Task.sleep(for: .milliseconds(10))
             }
             let didEnter = FileManager.default.fileExists(atPath: entered.path)
+            if whileLoadingHistory {
+                try Data().write(to: release)
+                let publishDeadline = ContinuousClock.now + .seconds(5)
+                while store.claudeSwapLastRefreshAt == nil, ContinuousClock.now < publishDeadline {
+                    try await Task.sleep(for: .milliseconds(10))
+                }
+            }
             settings.claudeSwapSource = .tcr
+            releaseHistory = true
             try Data().write(to: release)
             await refresh.value
             #expect(didEnter)
             #expect(store.claudeSwapAccountSnapshots.isEmpty)
             #expect(store.claudeSwapLastRefreshAt == nil)
             #expect(store.claudeSwapLastError == nil)
+            #expect(store.planUtilizationHistory[.claude]?.isEmpty != false)
         } catch {
+            releaseHistory = true
             try? Data().write(to: release)
             await refresh.value
             throw error

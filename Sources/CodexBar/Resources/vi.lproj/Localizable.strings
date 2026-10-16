@@ -1453,6 +1453,9 @@
 "menu_bar_layout_token_runs_out" = "Sắp hết";
 "menu_bar_layout_token_cost_today" = "Chi phí hôm nay";
 "menu_bar_layout_token_cost_window" = "Chi phí (Cửa sổ lịch sử)";
+"menu_bar_layout_token_spend" = "Chi phí %";
+"menu_bar_layout_token_spend_pace" = "Tốc độ chi phí";
+"menu_bar_layout_token_spend_budget" = "Chi phí / ngân sách";
 "menu_bar_layout_token_space" = "Khoảng trắng";
 "menu_bar_layout_token_line_break" = "Ngắt dòng";
 "menu_bar_layout_token_separator_accessibility" = "Dấu chấm phân cách";
@@ -1615,6 +1618,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "Phiên gần cạn";
 "menu_bar_layout_conditional_default_either_high" = "Phiên hoặc tuần đang ở mức cao";
 "menu_bar_layout_conditional_default_scoped_weekly" = "Tuần theo mô hình đã dùng trên 60%";
+"menu_bar_layout_conditional_default_spend_high" = "Chi phí đã dùng trên 90%";
 "Visible usage items" = "Mục sử dụng hiển thị";
 "Restore Defaults" = "Khôi phục mặc định";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "Chọn các hàng sử dụng xuất hiện trong menu của nhà cung cấp này, bản xem trước Cài đặt và Tổng quan.";
@@ -1933,7 +1937,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "Làm mới cấu hình trước khi làm mới dữ liệu web OpenAI.";
 "Refreshing account status…" = "Đang làm mới trạng thái tài khoản…";
 "Remaining budget compared with an ideal steady burn rate." = "Ngân sách còn lại so với tốc độ đốt ổn định lý tưởng.";
-"Renews: %@" = "Gia hạn: %@";
+"Plan renews: %@" = "Gia hạn gói: %@";
 "Request quota" = "Yêu cầu Hạn mức";
 "Requesting login…" = "Đang yêu cầu đăng nhập…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "Bắt buộc. Nhập khóa API thông thường hoặc khóa API quản lý tại đây. Khóa quản lý cũng cho phép Hoạt động tài khoản trên OpenRouter API chính thức.";
@@ -2520,6 +2524,8 @@
 "Pace sign" = "Dấu nhịp sử dụng";
 "Ahead of pace is +" = "Vượt nhịp là +";
 "Reserve is +" = "Dự trữ là +";
+"Back" = "Quay lại";
+"Forward" = "Tiếp";
 
 "cost_reset_inferred_tooltip" = "Suy ra: %@ không báo cáo ngày này. Hạn mức chi tiêu hằng tháng được đặt lại vào 00:00 UTC ngày 1.";
 /* fal provider credentials */
@@ -2637,3 +2643,26 @@
 "API credit" = "Tín dụng API";
 "Purchased credit" = "Tín dụng đã mua";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform hiển thị số dư tín dụng và chi tiêu hàng tháng trên Console, không phải lịch sử chi phí token cục bộ.";
+
+/* App-managed HTTP server */
+"http_server_title" = "Máy chủ HTTP";
+"http_server_enable" = "Bật máy chủ HTTP";
+"http_server_bind" = "Địa chỉ IPv4 lắng nghe";
+"http_server_port" = "Cổng";
+"http_server_token" = "Mã truy cập máy chủ";
+"http_server_show" = "Hiện";
+"http_server_generate" = "Tạo";
+"http_server_cache" = "Khoảng thời gian bộ nhớ đệm (giây)";
+"http_server_timeout" = "Thời gian chờ yêu cầu (giây; 0 để tắt)";
+"http_server_all_accounts" = "Bao gồm mọi tài khoản trong ảnh chụp";
+"http_server_identity" = "Danh tính trên bảng điều khiển";
+"http_server_redacted" = "Đã che";
+"http_server_warning" = "Chia sẻ mức sử dụng, chi phí, thông tin tài khoản và dự án, không bao giờ chia sẻ thông tin đăng nhập nhà cung cấp. HTTP gửi mã truy cập máy chủ không mã hóa. Chỉ dùng kết nối VPN hoặc Tailscale đáng tin cậy.";
+"http_server_plain_http" = "Cho phép HTTP không mã hóa bên ngoài máy Mac này";
+"http_server_dashboard" = "Bảng điều khiển";
+"http_server_wildcard" = "Trên thiết bị khác, thay 0.0.0.0 bằng địa chỉ IPv4 VPN hoặc Tailscale của máy Mac này.";
+"http_server_footer" = "Mặc định tắt. Khởi động cùng CodexBar và dừng khi thoát. Cài đặt và mã truy cập chỉ ở trên máy Mac này, không được đồng bộ hoặc xuất. Giữ máy Mac thức để truy cập từ xa.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "Ứng dụng Claude trên máy tính";
+"Use Claude desktop app cookies" = "Dùng cookie của ứng dụng Claude trên máy tính";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "Đối với mức sử dụng web, dùng tài khoản đã đăng nhập trong Claude.app thay vì tài khoản trình duyệt.";

@@ -1422,6 +1422,9 @@
 "menu_bar_layout_token_runs_out" = "소진";
 "menu_bar_layout_token_cost_today" = "오늘 비용";
 "menu_bar_layout_token_cost_window" = "비용 (기록 범위)";
+"menu_bar_layout_token_spend" = "지출 %";
+"menu_bar_layout_token_spend_pace" = "지출 속도";
+"menu_bar_layout_token_spend_budget" = "지출 / 예산";
 "menu_bar_layout_token_space" = "공백";
 "menu_bar_layout_token_line_break" = "줄 바꿈";
 "menu_bar_layout_token_separator_accessibility" = "구분점";
@@ -1583,6 +1586,7 @@
 "menu_bar_layout_conditional_default_session_spent" = "세션 거의 소진";
 "menu_bar_layout_conditional_default_either_high" = "세션 또는 주간 사용량 높음";
 "menu_bar_layout_conditional_default_scoped_weekly" = "모델별 주간 60% 초과 사용";
+"menu_bar_layout_conditional_default_spend_high" = "지출 90% 초과 사용";
 "Visible usage items" = "표시할 사용량 항목";
 "Restore Defaults" = "기본값 복원";
 "Choose which usage rows appear in this provider's menu, Settings preview, and Overview." = "이 제공업체의 메뉴, 설정 미리보기 및 개요에 표시할 사용량 행을 선택합니다.";
@@ -1900,7 +1904,7 @@
 "Refresh the profile before refreshing OpenAI web data." = "OpenAI 웹 데이터를 새로 고치기 전에 프로필을 새로 고치십시오.";
 "Refreshing account status…" = "계정 상태 새로고침 중…";
 "Remaining budget compared with an ideal steady burn rate." = "이상적인 꾸준한 연소율과 비교한 남은 예산입니다.";
-"Renews: %@" = "갱신: %@";
+"Plan renews: %@" = "요금제 갱신: %@";
 "Request quota" = "할당량 요청";
 "Requesting login…" = "로그인을 요청하는 중…";
 "Required. Enter a regular API key or a Management API key here. Management keys also enable account Activity on the official OpenRouter API." = "필수입니다. 여기에 일반 API 키 또는 관리 API 키를 입력하세요. 관리 키는 공식 OpenRouter API에서 계정 활동도 활성화합니다.";
@@ -2487,6 +2491,8 @@
 "Pace sign" = "사용 속도 부호";
 "Ahead of pace is +" = "기준 속도 초과는 +";
 "Reserve is +" = "여유분은 +";
+"Back" = "뒤로";
+"Forward" = "앞으로";
 
 "cost_reset_inferred_tooltip" = "추정: %@에서 이 날짜를 제공하지 않습니다. 월간 지출 한도는 매월 1일 00:00 UTC에 재설정됩니다.";
 /* fal provider credentials */
@@ -2604,3 +2610,26 @@
 "API credit" = "API 크레딧";
 "Purchased credit" = "구매한 크레딧";
 "Claude Platform exposes Console credit balance and monthly spend, not local token cost history." = "Claude Platform은 로컬 토큰 비용 내역이 아닌 Console 크레딧 잔액과 월간 지출을 표시합니다.";
+
+/* App-managed HTTP server */
+"http_server_title" = "HTTP 서버";
+"http_server_enable" = "HTTP 서버 활성화";
+"http_server_bind" = "바인딩할 IPv4 주소";
+"http_server_port" = "포트";
+"http_server_token" = "서버 토큰";
+"http_server_show" = "표시";
+"http_server_generate" = "생성";
+"http_server_cache" = "캐시 간격(초)";
+"http_server_timeout" = "요청 제한 시간(초, 0은 비활성화)";
+"http_server_all_accounts" = "스냅샷에 모든 계정 포함";
+"http_server_identity" = "대시보드 식별 정보";
+"http_server_redacted" = "가림";
+"http_server_warning" = "사용량, 비용, 계정 및 프로젝트 정보를 공개하며 공급자 인증 정보는 공개하지 않습니다. HTTP는 서버 토큰을 암호화하지 않고 전송합니다. 신뢰할 수 있는 VPN 또는 Tailscale 연결에서만 사용하세요.";
+"http_server_plain_http" = "이 Mac 외부에서 암호화되지 않은 HTTP 허용";
+"http_server_dashboard" = "대시보드";
+"http_server_wildcard" = "다른 기기에서는 0.0.0.0을 이 Mac의 VPN 또는 Tailscale IPv4 주소로 바꾸세요.";
+"http_server_footer" = "기본적으로 꺼져 있습니다. CodexBar와 함께 시작되고 종료 시 중지됩니다. 설정과 토큰은 이 Mac에 보관되며 동기화 및 내보내기에서 제외됩니다. 원격 접근을 위해 Mac이 잠자기에 들어가지 않도록 하세요.";
+/* Claude desktop cookie source */
+"Claude desktop app" = "Claude 데스크톱 앱";
+"Use Claude desktop app cookies" = "Claude 데스크톱 앱 쿠키 사용";
+"For Web usage, follow the account signed into Claude.app instead of a browser." = "웹 사용량에는 브라우저 대신 Claude.app에 로그인한 계정을 사용합니다.";
